@@ -1,0 +1,7 @@
+D:\Win32Xml\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+D:\Win32Xml\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+D:\Win32Xml\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+D:\Win32Xml\ConsoleApplication1\bin\Debug\Microsoft.GroupPolicy.Management.dll
+D:\Win32Xml\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+D:\Win32Xml\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
+D:\Win32Xml\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache

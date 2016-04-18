@@ -11,7 +11,7 @@ namespace Win32Xml
     class AccountExport
     {
 
-        public static void QueryGroups(string writePath) // Queries Win32_Group and exports to XML
+        public static void QueryGroups(string writePath, string folderName) // Queries Win32_Group and exports to XML
         {
             Console.WriteLine("Executing QueryGroups()...");
             XDocument doc = new XDocument();
@@ -42,12 +42,12 @@ namespace Win32Xml
                 if (count >= 20) break; //for testing purposes
             }
 
-            doc.Save(writePath + "\\" + "groups.xml");
+            doc.Save(writePath + "\\" + folderName + "\\" + "groups.xml");
             Console.WriteLine("QueryGroups() done!");
 
         }
 
-        public static void QueryUsers(string writePath) // Queries Win32_UserAccount and exports to XML
+        public static void QueryUsers(string writePath, string folderName) // Queries Win32_UserAccount and exports to XML
         {
             Console.WriteLine("Executing QueryUsers()...");
             XDocument doc = new XDocument();
@@ -85,12 +85,12 @@ namespace Win32Xml
                 if (count >= 20) break; // For testing purposes
             }
 
-            doc.Save(writePath + "\\" + "users.xml");
+            doc.Save(writePath + "\\" + folderName + "\\" + "users.xml");
             Console.WriteLine("QueryUsers() done!");
 
         }
 
-        public static void GroupUser(string writePath) // Queries Win32_GroupUser for group-user relation.
+        public static void GroupUser(string writePath, string folderName) // Queries Win32_GroupUser for group-user relation.
         {
             Console.WriteLine("Executing GroupUser()...");
             XDocument doc = new XDocument();
@@ -117,7 +117,7 @@ namespace Win32Xml
                 //if (count >= 100) break; // For testing purposes
             }
 
-            doc.Save(writePath + "\\" + "groupuser.xml");
+            doc.Save(writePath + "\\" + folderName + "\\" + "groupuser.xml");
             Console.WriteLine("GroupUser() done!");
 
         }

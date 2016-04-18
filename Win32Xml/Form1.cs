@@ -66,9 +66,9 @@ namespace Win32Xml
             {
                 MessageBox.Show("Start!", "Note",
                    MessageBoxButtons.OK, MessageBoxIcon.None);
-                AccountExport.QueryGroups(destinationPath.Text);
-                AccountExport.QueryUsers(destinationPath.Text);
-                AccountExport.GroupUser(destinationPath.Text);
+                AccountExport.QueryGroups(destinationPath.Text, exportName.Text);
+                AccountExport.QueryUsers(destinationPath.Text, exportName.Text);
+                AccountExport.GroupUser(destinationPath.Text, exportName.Text);
                 MessageBox.Show("All done!", "Note",
                    MessageBoxButtons.OK, MessageBoxIcon.None);
             }
@@ -76,7 +76,7 @@ namespace Win32Xml
             {
                 MessageBox.Show("Start!", "Note",
                    MessageBoxButtons.OK, MessageBoxIcon.None);
-                AccountExport.QueryUsers(destinationPath.Text);
+                AccountExport.QueryUsers(destinationPath.Text, exportName.Text);
                 MessageBox.Show("All done!", "Note",
                    MessageBoxButtons.OK, MessageBoxIcon.None);
             }
@@ -84,7 +84,7 @@ namespace Win32Xml
             {
                 MessageBox.Show("Start!", "Note",
                    MessageBoxButtons.OK, MessageBoxIcon.None);
-                AccountExport.QueryGroups(destinationPath.Text);
+                AccountExport.QueryGroups(destinationPath.Text, exportName.Text);
                 MessageBox.Show("All done!", "Note",
                    MessageBoxButtons.OK, MessageBoxIcon.None);
             }
@@ -97,6 +97,34 @@ namespace Win32Xml
         }
 
         private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void importRunButton_Click(object sender, EventArgs e)
+        {
+            AccountImport.ReadFile(sourceFolder.Text);
+        }
+
+        private void sourceBrowseButton_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                this.sourceFolder.Text = folderBrowserDialog1.SelectedPath;
+            }
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged_2(object sender, EventArgs e)
         {
 
         }
