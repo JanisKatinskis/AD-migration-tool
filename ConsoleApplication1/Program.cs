@@ -22,16 +22,17 @@ namespace ConsoleApplication1
             //GroupPolicy();
             //CreateDummy("Dummy2016xaxa", "dada", "Test");
             //CreateLocalWindowsAccount("Dummmmy201666xa");
-            ReadGroups("D:\\groups.xml");
-            //ReadUsers("D:\\useraccounts.xml");
+            ReadGroups("C:\\groups.xml");
+            ReadUsers("C:\\useraccounts.xml");
             //MakeNewUser("512", "TELEKOM\\ojolkina", "", "false", "TELEKOM", "Olga Jolkina", null, "false", "false", "ojolkina", "true", "true", "S-1-5-21-79331101-1830893244-26564730-1048", "1", "OK");
             //QueryPrincipalGroup();
             //QueryAsPrincipal();
-            //MakePrincipalGroup("Grupas apraksts!!", "IT Palidzibas dienests", "CN=IT Palidzibas dienests,OU=_Grupas,OU=Telekom,DC=ad,DC=lattelekom,DC=biz", "Telekom", "Universal", "true", "IT Palidzibas dienests", "IT Palidzibas dienests", "");
+            //MakePrincipalGroup( null, "DisplayName", "DistinguishedName", "Universal", "true", "AllOne_BPO_SEBTM_User", "AllOne_BPO_SEBTM_User", null);
             //CreateADUser();
             //CreateADGroup("Pirmdiena");
             //MakePrincipalUser("false", "true", null, "Janis-Emils Katinskis", null, "E30129", "true", "Jānis Emīls", null, null, null, "Janis-Emils Katinskis", "true", "true", null, "jkatins0", null, "false", "Katinskis", "false", "jkatins0@ad.lattelekom.biz", null);
             //GroupsMembers();
+            UsersToGroups("D:\\groupsusers.xml");
             //AddMemberToGroup("test group", "jkatins0");
 
             Console.WriteLine("***ENDED***");
@@ -424,26 +425,56 @@ namespace ConsoleApplication1
 
             foreach (var x in item)
             {
-                Console.WriteLine(x.Context);
-                Console.WriteLine(x.ContextType);
-                Console.WriteLine(x.Description);
-                Console.WriteLine(x.DisplayName);
-                Console.WriteLine(x.DistinguishedName);
-                Console.WriteLine(x.GroupScope);
-                Console.WriteLine(x.Guid);
-                Console.WriteLine(x.IsSecurityGroup);
-                Console.WriteLine(x.Name);
-                Console.WriteLine(x.SamAccountName);
-                Console.WriteLine(x.Sid);
-                Console.WriteLine(x.StructuralObjectClass);
-                Console.WriteLine(x.UserPrincipalName);
+                MakePrincipalGroup(x.Description, x.DisplayName, x.DistinguishedName, x.GroupScope, x.IsSecurityGroup, x.Name, x.SamAccountName, x.UserPrincipalName);
                 count++;
-                if (count >= 1) break;
+                //if (count >= 1) break;
             }
 
         }
 
         public static void ReadUsers(string folderPath)
+        {
+            XDocument doc = XDocument.Load(folderPath);
+            int count = 0;
+
+            var item = from q in doc.Descendants("User")
+                       select new
+                       {
+                           AllowReversiblePasswordEncryption = q.Element("AllowReversiblePasswordEncryption").Value,
+                           DelegationPermitted = q.Element("DelegationPermitted").Value,
+                           Description = q.Element("Description").Value,
+                           DisplayName = q.Element("DisplayName").Value,
+                           DistinguishedName = q.Element("DistinguishedName").Value,
+                           EmailAddress = q.Element("EmailAddress").Value,
+                           EmployeeId = q.Element("EmployeeId").Value,
+                           Enabled = q.Element("Enabled").Value,
+                           GivenName = q.Element("GivenName").Value,
+                           HomeDirectory = q.Element("HomeDirectory").Value,
+                           HomeDrive = q.Element("HomeDrive").Value,
+                           MiddleName = q.Element("MiddleName").Value,
+                           Name = q.Element("Name").Value,
+                           PasswordNeverExpires = q.Element("PasswordNeverExpires").Value,
+                           PasswordNotRequired = q.Element("PasswordNotRequired").Value,
+                           PermittedWorkstations = q.Element("PermittedWorkstations").Value,
+                           SamAccountName = q.Element("SamAccountName").Value,
+                           ScriptPath = q.Element("ScriptPath").Value,
+                           SmartcardLogonRequired = q.Element("SmartcardLogonRequired").Value,
+                           Surname = q.Element("Surname").Value,
+                           UserCannotChangePassword = q.Element("UserCannotChangePassword").Value,
+                           UserPrincipalName = q.Element("UserPrincipalName").Value,
+                           VoiceTelephoneNumber = q.Element("VoiceTelephoneNumber").Value
+                       };
+
+            foreach (var x in item)
+            {
+                MakePrincipalUser(x.AllowReversiblePasswordEncryption, x.DelegationPermitted, x.Description, x.DisplayName, x.EmailAddress, x.EmployeeId, x.Enabled, x.GivenName, x.HomeDirectory, x.HomeDrive, x.MiddleName, x.Name, x.PasswordNeverExpires, x.PasswordNotRequired, x.PermittedWorkstations, x.SamAccountName, x.ScriptPath, x.SmartcardLogonRequired, x.Surname, x.UserCannotChangePassword, x.UserPrincipalName, x.VoiceTelephoneNumber);
+                count++;
+                //if (count >= 1) break;
+            }
+
+
+        }
+        public static void RRRRRRRRRRRReadUsers(string folderPath)
         {
             XDocument doc = XDocument.Load(folderPath);
             int count = 0;
@@ -801,7 +832,6 @@ namespace ConsoleApplication1
             string Description, 
             string DisplayName,
             string DistinguishedName,
-            string Domain,
             string varGroupScope, 
             string IsSecurityGroup, 
             string Name, 
@@ -817,8 +847,12 @@ namespace ConsoleApplication1
                 //PrincipalContext context = new PrincipalContext(ContextType.Domain);
                 //GroupPrincipal group = new GroupPrincipal(context);
 
-                group.Description = Description;
-                Console.WriteLine("Description set!");
+                if(Description != string.Empty)
+                {
+                    group.Description = Description;
+                    Console.WriteLine("Description set!");
+                }
+
                 group.DisplayName = DisplayName;
                 Console.WriteLine("DisplayName set!");
 
@@ -834,14 +868,16 @@ namespace ConsoleApplication1
                 Console.WriteLine("IsSecurityGroup set!");
 
                 group.Name = Name;
-                //Console.WriteLine("Name set!");
+                Console.WriteLine("Name set!");
 
-                //group.SamAccountName = SamAccountName;
-                //Console.WriteLine("SamAccountName set!");
+                group.SamAccountName = SamAccountName;
+                Console.WriteLine("SamAccountName set!");
 
-                if (UserPrincipalName == "") group.UserPrincipalName = null;
-                else group.UserPrincipalName = UserPrincipalName;
-                Console.WriteLine("UserPrincipalName set!");
+                if (UserPrincipalName != string.Empty)
+                {
+                    group.UserPrincipalName = UserPrincipalName;
+                    Console.WriteLine("UserPrincipalName set!");
+                }
 
 
                 group.Save();
@@ -880,7 +916,7 @@ namespace ConsoleApplication1
                     {
                         groupList.Add(new XElement("User",
                                         new XElement("Username", result.SamAccountName),
-                                        new XElement("GroupName", principal.Name)
+                                        new XElement("GroupName", principal.SamAccountName)
                                         ));
                     }
                 }
@@ -889,12 +925,36 @@ namespace ConsoleApplication1
             Console.WriteLine(count);
         }
 
-        public static void AddMemberToGroup(string groupName, string userName)
+
+        public static void UsersToGroups(string folderPath)
+        {
+            XDocument doc = XDocument.Load(folderPath);
+            int count = 0;
+            Console.WriteLine("File loaded");
+
+            var item = from q in doc.Descendants("User")
+                       select new
+                       {
+                           Username = q.Element("Username").Value,
+                           GroupName = q.Element("GroupName").Value
+                       };
+            Console.WriteLine("XML read");
+
+            foreach (var x in item)
+            {
+                Console.WriteLine("Adding user");
+                AddMemberToGroup(x.Username, x.GroupName);
+                count++;
+                //if (count >= 1) break;
+            }
+
+        }
+        public static void AddMemberToGroup(string userName, string groupName )
         {
             try
             {
                 PrincipalContext AD = new PrincipalContext(ContextType.Domain);
-                GroupPrincipal group = GroupPrincipal.FindByIdentity(AD, groupName);
+                GroupPrincipal group = GroupPrincipal.FindByIdentity(AD, IdentityType.SamAccountName, groupName);
                 Console.WriteLine("Group: " + group.ToString());
                 group.Members.Add(AD, IdentityType.SamAccountName, userName);
                 group.Save();
@@ -905,11 +965,6 @@ namespace ConsoleApplication1
             {
                 Console.WriteLine("An error occurred. {0}", e.Message);
             }
-        }
-
-        public static void UsersToGroups()
-        {
-
         }
     }
 }
