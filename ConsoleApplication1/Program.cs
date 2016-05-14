@@ -6,6 +6,7 @@ using System.Management;
 using System.Xml;
 using System.Xml.Linq;
 using Microsoft.GroupPolicy;
+using System.IO;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 
@@ -26,7 +27,7 @@ namespace ConsoleApplication1
             //ReadUsers("C:\\useraccounts.xml");
             //MakeNewUser("512", "TELEKOM\\ojolkina", "", "false", "TELEKOM", "Olga Jolkina", null, "false", "false", "ojolkina", "true", "true", "S-1-5-21-79331101-1830893244-26564730-1048", "1", "OK");
             //QueryPrincipalGroups();
-            QueryPrincipalUsers();
+            //QueryPrincipalUsers();
             //QueryAsPrincipal();
             //MakePrincipalGroup( null, "DisplayName", "DistinguishedName", "Universal", "true", "AllOne_BPO_SEBTM_User", "AllOne_BPO_SEBTM_User", null);
             //CreateADUser();
@@ -35,6 +36,9 @@ namespace ConsoleApplication1
             //QueryGroupsMembers();
             //UsersToGroups("C:\\groupsusers.xml");
             //AddMemberToGroup("test group", "jkatins0");
+            //printhomefolder("\\\\ltc-fs.ad.lattelekom.biz\\HOME\\abudana", "D:");
+            generateExportReportFile("D:\\");
+            addToExportReportFile("D:\\" + "ExportReport_" + DateTime.Today.Date.ToString("dd.MM.yyyy") + ".txt", "a");
 
             Console.WriteLine("***ENDED***");
             Console.ReadKey();
@@ -978,5 +982,72 @@ namespace ConsoleApplication1
                 Console.WriteLine("An error occurred. {0}", e.Message);
             }
         }
+
+        public static void printhomefolder(string HomeDirectory,string HomeDrive)
+        {
+            try
+            {
+                //examples
+                // HomeDirectory: \\ltc-fs.ad.lattelekom.biz\HOME\abudana
+                // HomeDrive: U:
+                //int startindex;
+                string x = HomeDirectory;
+                string homefolder;
+                int endindex = HomeDirectory.IndexOf('\\', 0, 3);
+
+                for(int i = 0; i < 3; i++)
+                {
+                    x=x.Substring(x.IndexOf('\\') +1);
+                }
+
+                homefolder = HomeDrive + "\\" + x;
+                Console.WriteLine(homefolder);
+                //Console.WriteLine(HomeDirectory.Substring(0, endindex));
+                Directory.CreateDirectory(homefolder);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message, "Error creating account: {0}");
+
+            }
+        }
+
+        public static void CreateHomeFolder(string HomeDirectory, string HomeDrive)
+        {
+            string homeFolder = HomeDirectory;
+            for (int i = 0; i < 3; i++)
+            {
+                homeFolder = homeFolder.Substring(homeFolder.IndexOf('\\') + 1);
+            }
+
+            homeFolder = HomeDrive + "\\" + homeFolder;
+
+        }
+
+        public static void generateExportReportFile(string filePath)
+        {
+            // Creates new report file containing the current date.
+            StreamWriter file = new StreamWriter(filePath + "ExportReport_" + DateTime.Today.Date.ToString("dd.MM.yyyy") + ".txt");
+
+            // Writes the heading of the file in the first line
+            file.WriteLine("ACTIVE DIRECTORY EXPORT REPORT " + DateTime.Today.Date.ToString("dd.MM.yyyy"));
+            file.WriteLine(String.Empty);
+
+            // Closes the text file
+            file.Close();
+        }
+
+        public static void addToExportReportFile(string filePath, string reportMessage)
+        {
+
+            //var reportFile = File.ReadAllLines(filePath);
+            //int currentLine = reportFile.Length;
+            //reportFile[currentLine] = reportMessage;
+            //File.WriteAllLines(filePath, reportFile);
+
+            File.AppendAllText(filePath, reportMessage);
+        }
+
     }
 }

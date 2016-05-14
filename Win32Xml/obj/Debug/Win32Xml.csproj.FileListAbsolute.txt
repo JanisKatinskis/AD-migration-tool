@@ -7,3 +7,6 @@ D:\Win32Xml\Win32Xml\obj\Debug\Win32Xml.csproj.GenerateResource.Cache
 D:\Win32Xml\Win32Xml\obj\Debug\Win32Xml.exe
 D:\Win32Xml\Win32Xml\obj\Debug\Win32Xml.pdb
 D:\Win32Xml\Win32Xml\obj\Debug\Win32Xml.GuiForm.resources
+C:\Users\Janis\Documents\LU DF\kval\Win32Xml\Win32Xml\bin\Debug\Win32Xml.exe.config
+C:\Users\Janis\Documents\LU DF\kval\Win32Xml\Win32Xml\obj\Debug\Win32Xml.exe
+C:\Users\Janis\Documents\LU DF\kval\Win32Xml\Win32Xml\obj\Debug\Win32Xml.pdb

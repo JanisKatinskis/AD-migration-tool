@@ -41,6 +41,12 @@
             this.ExportProgressBar = new System.Windows.Forms.ProgressBar();
             this.generateReportCheckBox = new System.Windows.Forms.CheckBox();
             this.groupUserCheckBox = new System.Windows.Forms.CheckBox();
+            this.userFileNameLabel = new System.Windows.Forms.Label();
+            this.GroupfileNameLabel = new System.Windows.Forms.Label();
+            this.groupMembersFileNameLabel = new System.Windows.Forms.Label();
+            this.userFileName = new System.Windows.Forms.TextBox();
+            this.groupFileName = new System.Windows.Forms.TextBox();
+            this.groupMemberFileName = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.importGroupMembersBrowse = new System.Windows.Forms.Button();
             this.importGroupBrowse = new System.Windows.Forms.Button();
@@ -63,12 +69,6 @@
             this.somethingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.BackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.importFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.groupMemberFileName = new System.Windows.Forms.TextBox();
-            this.groupMembersFileNameLabel = new System.Windows.Forms.Label();
-            this.groupFileName = new System.Windows.Forms.TextBox();
-            this.GroupfileNameLabel = new System.Windows.Forms.Label();
-            this.userFileName = new System.Windows.Forms.TextBox();
-            this.userFileNameLabel = new System.Windows.Forms.Label();
             this.ImportCurrentAction.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -200,6 +200,8 @@
             // generateReportCheckBox
             // 
             this.generateReportCheckBox.AutoSize = true;
+            this.generateReportCheckBox.Checked = true;
+            this.generateReportCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.generateReportCheckBox.Location = new System.Drawing.Point(98, 218);
             this.generateReportCheckBox.Name = "generateReportCheckBox";
             this.generateReportCheckBox.Size = new System.Drawing.Size(100, 17);
@@ -218,6 +220,63 @@
             this.groupUserCheckBox.Text = "Export user-group info";
             this.groupUserCheckBox.UseVisualStyleBackColor = true;
             this.groupUserCheckBox.CheckedChanged += new System.EventHandler(this.groupUserCheckBox_CheckedChanged);
+            // 
+            // userFileNameLabel
+            // 
+            this.userFileNameLabel.AutoSize = true;
+            this.userFileNameLabel.Location = new System.Drawing.Point(8, 19);
+            this.userFileNameLabel.Name = "userFileNameLabel";
+            this.userFileNameLabel.Size = new System.Drawing.Size(124, 13);
+            this.userFileNameLabel.TabIndex = 1;
+            this.userFileNameLabel.Text = "User database file name:";
+            this.userFileNameLabel.UseMnemonic = false;
+            this.userFileNameLabel.Click += new System.EventHandler(this.DestinationPathLabel_Click);
+            // 
+            // GroupfileNameLabel
+            // 
+            this.GroupfileNameLabel.AutoSize = true;
+            this.GroupfileNameLabel.Location = new System.Drawing.Point(8, 45);
+            this.GroupfileNameLabel.Name = "GroupfileNameLabel";
+            this.GroupfileNameLabel.Size = new System.Drawing.Size(131, 13);
+            this.GroupfileNameLabel.TabIndex = 1;
+            this.GroupfileNameLabel.Text = "Group database file name:";
+            this.GroupfileNameLabel.UseMnemonic = false;
+            this.GroupfileNameLabel.Click += new System.EventHandler(this.DestinationPathLabel_Click);
+            // 
+            // groupMembersFileNameLabel
+            // 
+            this.groupMembersFileNameLabel.AutoSize = true;
+            this.groupMembersFileNameLabel.Location = new System.Drawing.Point(8, 71);
+            this.groupMembersFileNameLabel.Name = "groupMembersFileNameLabel";
+            this.groupMembersFileNameLabel.Size = new System.Drawing.Size(160, 13);
+            this.groupMembersFileNameLabel.TabIndex = 1;
+            this.groupMembersFileNameLabel.Text = "Group members database name:";
+            this.groupMembersFileNameLabel.UseMnemonic = false;
+            this.groupMembersFileNameLabel.Click += new System.EventHandler(this.DestinationPathLabel_Click);
+            // 
+            // userFileName
+            // 
+            this.userFileName.Location = new System.Drawing.Point(178, 19);
+            this.userFileName.Name = "userFileName";
+            this.userFileName.Size = new System.Drawing.Size(301, 20);
+            this.userFileName.TabIndex = 0;
+            this.userFileName.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // groupFileName
+            // 
+            this.groupFileName.Location = new System.Drawing.Point(178, 45);
+            this.groupFileName.Name = "groupFileName";
+            this.groupFileName.Size = new System.Drawing.Size(301, 20);
+            this.groupFileName.TabIndex = 0;
+            this.groupFileName.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // groupMemberFileName
+            // 
+            this.groupMemberFileName.Location = new System.Drawing.Point(178, 71);
+            this.groupMemberFileName.Name = "groupMemberFileName";
+            this.groupMemberFileName.Size = new System.Drawing.Size(301, 20);
+            this.groupMemberFileName.TabIndex = 0;
+            this.groupMemberFileName.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // tabPage2
             // 
@@ -326,7 +385,7 @@
             // importGroupMembersLabel
             // 
             this.importGroupMembersLabel.AutoSize = true;
-            this.importGroupMembersLabel.Location = new System.Drawing.Point(2, 89);
+            this.importGroupMembersLabel.Location = new System.Drawing.Point(2, 86);
             this.importGroupMembersLabel.Name = "importGroupMembersLabel";
             this.importGroupMembersLabel.Size = new System.Drawing.Size(100, 13);
             this.importGroupMembersLabel.TabIndex = 6;
@@ -336,7 +395,7 @@
             // importGroupLabel
             // 
             this.importGroupLabel.AutoSize = true;
-            this.importGroupLabel.Location = new System.Drawing.Point(47, 63);
+            this.importGroupLabel.Location = new System.Drawing.Point(47, 62);
             this.importGroupLabel.Name = "importGroupLabel";
             this.importGroupLabel.Size = new System.Drawing.Size(55, 13);
             this.importGroupLabel.TabIndex = 6;
@@ -363,7 +422,7 @@
             // importUserLabel
             // 
             this.importUserLabel.AutoSize = true;
-            this.importUserLabel.Location = new System.Drawing.Point(54, 37);
+            this.importUserLabel.Location = new System.Drawing.Point(54, 33);
             this.importUserLabel.Name = "importUserLabel";
             this.importUserLabel.Size = new System.Drawing.Size(48, 13);
             this.importUserLabel.TabIndex = 6;
@@ -372,7 +431,7 @@
             // 
             // importUserPath
             // 
-            this.importUserPath.Location = new System.Drawing.Point(108, 30);
+            this.importUserPath.Location = new System.Drawing.Point(108, 26);
             this.importUserPath.Name = "importUserPath";
             this.importUserPath.Size = new System.Drawing.Size(301, 20);
             this.importUserPath.TabIndex = 5;
@@ -434,63 +493,6 @@
             this.importFileDialog.FileName = "openFileDialog1";
             this.importFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.importFileDialog_FileOk);
             // 
-            // groupMemberFileName
-            // 
-            this.groupMemberFileName.Location = new System.Drawing.Point(178, 71);
-            this.groupMemberFileName.Name = "groupMemberFileName";
-            this.groupMemberFileName.Size = new System.Drawing.Size(301, 20);
-            this.groupMemberFileName.TabIndex = 0;
-            this.groupMemberFileName.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // groupMembersFileNameLabel
-            // 
-            this.groupMembersFileNameLabel.AutoSize = true;
-            this.groupMembersFileNameLabel.Location = new System.Drawing.Point(8, 71);
-            this.groupMembersFileNameLabel.Name = "groupMembersFileNameLabel";
-            this.groupMembersFileNameLabel.Size = new System.Drawing.Size(160, 13);
-            this.groupMembersFileNameLabel.TabIndex = 1;
-            this.groupMembersFileNameLabel.Text = "Group members database name:";
-            this.groupMembersFileNameLabel.UseMnemonic = false;
-            this.groupMembersFileNameLabel.Click += new System.EventHandler(this.DestinationPathLabel_Click);
-            // 
-            // groupFileName
-            // 
-            this.groupFileName.Location = new System.Drawing.Point(178, 45);
-            this.groupFileName.Name = "groupFileName";
-            this.groupFileName.Size = new System.Drawing.Size(301, 20);
-            this.groupFileName.TabIndex = 0;
-            this.groupFileName.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // GroupfileNameLabel
-            // 
-            this.GroupfileNameLabel.AutoSize = true;
-            this.GroupfileNameLabel.Location = new System.Drawing.Point(8, 45);
-            this.GroupfileNameLabel.Name = "GroupfileNameLabel";
-            this.GroupfileNameLabel.Size = new System.Drawing.Size(131, 13);
-            this.GroupfileNameLabel.TabIndex = 1;
-            this.GroupfileNameLabel.Text = "Group database file name:";
-            this.GroupfileNameLabel.UseMnemonic = false;
-            this.GroupfileNameLabel.Click += new System.EventHandler(this.DestinationPathLabel_Click);
-            // 
-            // userFileName
-            // 
-            this.userFileName.Location = new System.Drawing.Point(178, 19);
-            this.userFileName.Name = "userFileName";
-            this.userFileName.Size = new System.Drawing.Size(301, 20);
-            this.userFileName.TabIndex = 0;
-            this.userFileName.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // userFileNameLabel
-            // 
-            this.userFileNameLabel.AutoSize = true;
-            this.userFileNameLabel.Location = new System.Drawing.Point(8, 19);
-            this.userFileNameLabel.Name = "userFileNameLabel";
-            this.userFileNameLabel.Size = new System.Drawing.Size(124, 13);
-            this.userFileNameLabel.TabIndex = 1;
-            this.userFileNameLabel.Text = "User database file name:";
-            this.userFileNameLabel.UseMnemonic = false;
-            this.userFileNameLabel.Click += new System.EventHandler(this.DestinationPathLabel_Click);
-            // 
             // GuiForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -519,7 +521,6 @@
         private System.Windows.Forms.FolderBrowserDialog exportFolderBrowserDialog;
         private System.Windows.Forms.Label destinationPathLabel;
         private System.Windows.Forms.CheckBox groupCheckBox;
-        private System.Windows.Forms.TextBox destinationPath;
         private System.Windows.Forms.CheckBox userCheckBox;
         private System.Windows.Forms.Button pathBrowseButton;
         private System.Windows.Forms.Button exportRunButton;
@@ -533,7 +534,6 @@
         private System.Windows.Forms.ToolStripMenuItem somethingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem somethingToolStripMenuItem1;
         private System.Windows.Forms.CheckBox groupUserCheckBox;
-        private System.Windows.Forms.CheckBox generateReportCheckBox;
         private System.Windows.Forms.CheckBox importReport;
         private System.Windows.Forms.CheckBox importGroups;
         private System.Windows.Forms.CheckBox importGroupUsers;
@@ -557,6 +557,8 @@
         private System.Windows.Forms.TextBox userFileName;
         private System.Windows.Forms.TextBox groupFileName;
         private System.Windows.Forms.TextBox groupMemberFileName;
+        public System.Windows.Forms.CheckBox generateReportCheckBox;
+        private System.Windows.Forms.TextBox destinationPath;
     }
 }
 

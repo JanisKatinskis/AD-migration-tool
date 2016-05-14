@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
+
 
 namespace Win32Xml
 {
@@ -67,6 +69,18 @@ namespace Win32Xml
         private void exportRunButton_Click(object sender, EventArgs e)
         {
 
+            // Sets wheter or not to generate report
+            if (generateReportCheckBox.Checked == true)
+            {
+                Global.generateReport = true;
+                Global.reportPath = destinationPath.Text;
+                AccountExport.generateExportReportFile(Global.reportPath);
+            }
+            else
+            {
+                Global.generateReport = false;
+            }
+
             // Utility variable. Contains the last character of the folder path
             // that will be checked in the if statement below.
             char lastChar = destinationPath.Text[destinationPath.Text.Length - 1];
@@ -79,7 +93,7 @@ namespace Win32Xml
             if(userCheckBox.Checked == true)
             {
                 ExportCurrentAction.Text = "Exporting users...";
-                AccountExport.QueryPrincipalUsers(destinationPath.Text);
+                AccountExport.QueryPrincipalUsers(destinationPath.Text, userFileName.Text);
             }
 
             // Checks if "Export users" checkbox is checked. If true, executes function
@@ -87,17 +101,17 @@ namespace Win32Xml
             if (groupCheckBox.Checked == true)
             {
                 ExportCurrentAction.Text = "Exporting groups...";
-                AccountExport.QueryPrincipalGroups(destinationPath.Text);
+                AccountExport.QueryPrincipalGroups(destinationPath.Text, groupFileName.Text);
             }
             if (groupUserCheckBox.Checked == true && groupCheckBox.Checked == true && userCheckBox.Checked == true)
             {
                 ExportCurrentAction.Text = "Exporting group membership info...";
-                AccountExport.QueryGroupsMembers(destinationPath.Text);
+                AccountExport.QueryGroupsMembers(destinationPath.Text, groupMemberFileName.Text);
             }
 
             if (userCheckBox.Checked == false && groupCheckBox.Checked == false && groupUserCheckBox.Checked == false)
             {
-                MessageBox.Show("You have not selected anything WTF", "Error",
+                MessageBox.Show("You have not selected any of the actions.", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -148,12 +162,28 @@ namespace Win32Xml
                 MessageBox.Show("You have not selected anything WTF", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            else
+            {
+                MessageBox.Show("All done!", "Alldone!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
 
             ExportCurrentAction.Text = "Everything done!";
         }
 
         private void sourceBrowseButton_Click(object sender, EventArgs e)
         {
+            //XDocument doc = XDocument.Load(importFileDialog.FileName);
+
+            /**
+            if(doc.FirstNode.ToString() != "account_list")
+            {
+                MessageBox.Show("This file does not contain apropriate XML tag!", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+            **/
+
             if (importFileDialog.ShowDialog() == DialogResult.OK)
             {
                 this.importUserPath.Text = importFileDialog.FileName;
@@ -205,6 +235,16 @@ namespace Win32Xml
 
         private void importGroupBrowse_Click(object sender, EventArgs e)
         {
+            XDocument doc = XDocument.Load(importFileDialog.FileName);
+
+            if (doc.FirstNode.ToString() != "group_list")
+            {
+                MessageBox.Show("This file does not contain apropriate XML tag!", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+
+
             if (importFileDialog.ShowDialog() == DialogResult.OK)
             {
                 this.importGroupPath.Text = importFileDialog.FileName;
@@ -213,6 +253,16 @@ namespace Win32Xml
 
         private void importGroupMembersBrowse_Click(object sender, EventArgs e)
         {
+            XDocument doc = XDocument.Load(importFileDialog.FileName);
+
+            if (doc.FirstNode.ToString() != "groupsusers")
+            {
+                MessageBox.Show("This file does not contain apropriate XML tag!", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+
+
             if (importFileDialog.ShowDialog() == DialogResult.OK)
             {
                 this.importGroupMembersPath.Text = importFileDialog.FileName;

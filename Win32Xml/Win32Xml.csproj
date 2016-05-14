@@ -51,6 +51,8 @@
   <ItemGroup>
     <Compile Include="AccountExport.cs" />
     <Compile Include="AccountImport.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="GuiForm.cs">
       <SubType>Form</SubType>
     </Compile>

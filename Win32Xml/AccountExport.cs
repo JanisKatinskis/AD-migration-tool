@@ -11,7 +11,6 @@ using System.Windows.Forms;
 using System.IO;
 
 
-
 namespace Win32Xml
 {
 
@@ -26,7 +25,7 @@ namespace Win32Xml
         /// Function that queries all users in Active Directory and saves their info to an XML file.
         /// </summary>
         /// <param name="QueryPrincipalUsers"></param>
-        public static void QueryPrincipalUsers(string folderPath)
+        public static void QueryPrincipalUsers(string folderPath, string fileName)
         {
             
             try
@@ -56,67 +55,99 @@ namespace Win32Xml
                 // Searches the Active Directory and gets info from every user.
                 foreach (UserPrincipal result in search.FindAll())
                 {
-
-                    // Writes all the info about the user to XML.
-                    accountList.Add(new XElement("User",
-                                    new XElement("AccountExpirationDate", result.AccountExpirationDate),
-                                    new XElement("AccountLockoutTime", result.AccountLockoutTime),
-                                    new XElement("AdvancedSearchFilter", result.AdvancedSearchFilter),
-                                    new XElement("AllowReversiblePasswordEncryption", result.AllowReversiblePasswordEncryption),
-                                    new XElement("BadLogonCount", result.BadLogonCount),
-                                    new XElement("Certificates", result.Certificates),
-                                    new XElement("Context", result.Context),
-                                    new XElement("ContextType", result.ContextType),
-                                    new XElement("DelegationPermitted", result.DelegationPermitted),
-                                    new XElement("Description", result.Description),
-                                    new XElement("DisplayName", result.DisplayName),
-                                    new XElement("DistinguishedName", result.DistinguishedName),
-                                    new XElement("EmailAddress", result.EmailAddress),
-                                    new XElement("EmployeeId", result.EmployeeId),
-                                    new XElement("Enabled", result.Enabled),
-                                    new XElement("GivenName", result.GivenName),
-                                    new XElement("Guid", result.Guid),
-                                    new XElement("HomeDirectory", result.HomeDirectory),
-                                    new XElement("HomeDrive", result.HomeDrive),
-                                    new XElement("LastBadPasswordAttempt", result.LastBadPasswordAttempt),
-                                    new XElement("LastLogon", result.LastLogon),
-                                    new XElement("LastPasswordSet", result.LastPasswordSet),
-                                    new XElement("MiddleName", result.MiddleName),
-                                    new XElement("Name", result.Name),
-                                    new XElement("PasswordNeverExpires", result.PasswordNeverExpires),
-                                    new XElement("PasswordNotRequired", result.PasswordNotRequired),
-                                    new XElement("PermittedLogonTimes", result.PermittedLogonTimes),
-                                    new XElement("PermittedWorkstations", result.PermittedWorkstations),
-                                    new XElement("SamAccountName", result.SamAccountName),
-                                    new XElement("ScriptPath", result.ScriptPath),
-                                    new XElement("Sid", result.Sid),
-                                    new XElement("SmartcardLogonRequired", result.SmartcardLogonRequired),
-                                    new XElement("StructuralObjectClass", result.StructuralObjectClass),
-                                    new XElement("Surname", result.Surname),
-                                    new XElement("UserCannotChangePassword", result.UserCannotChangePassword),
-                                    new XElement("UserPrincipalName", result.UserPrincipalName),
-                                    new XElement("VoiceTelephoneNumber", result.VoiceTelephoneNumber))
-                                    );
+                    // calls the function to 
+                    WriteToExportFile(result, accountList);
                 }
 
                 // Saves the document to defined folderpath
-                doc.Save(folderPath + "useraccounts.xml");
+                doc.Save(folderPath + fileName + ".xml");
 
             }
 
             // Error handler
-            catch ( Exception e)
+            catch ( Exception e )
             {
-                MessageBox.Show("An error occurred. {0}", e.Message);
+                MessageBox.Show(e.Message, "An error occurred",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
 
+        }
+
+
+        /// <summary>
+        /// Reads user account info from the Active Directory and writes it to XML file
+        /// </summary>
+        /// <param name="result">Instance of the current UserPrincipal</param>
+        /// <param name="accountList"></param>
+        public static void WriteToExportFile(UserPrincipal result, XElement accountList)
+        {
+            try
+            {
+                // Writes all the info about the user to XML.
+                accountList.Add(new XElement("User",
+                                new XElement("AccountExpirationDate", result.AccountExpirationDate),
+                                new XElement("AccountLockoutTime", result.AccountLockoutTime),
+                                new XElement("AdvancedSearchFilter", result.AdvancedSearchFilter),
+                                new XElement("AllowReversiblePasswordEncryption", result.AllowReversiblePasswordEncryption),
+                                new XElement("BadLogonCount", result.BadLogonCount),
+                                new XElement("Certificates", result.Certificates),
+                                new XElement("Context", result.Context),
+                                new XElement("ContextType", result.ContextType),
+                                new XElement("DelegationPermitted", result.DelegationPermitted),
+                                new XElement("Description", result.Description),
+                                new XElement("DisplayName", result.DisplayName),
+                                new XElement("DistinguishedName", result.DistinguishedName),
+                                new XElement("EmailAddress", result.EmailAddress),
+                                new XElement("EmployeeId", result.EmployeeId),
+                                new XElement("Enabled", result.Enabled),
+                                new XElement("GivenName", result.GivenName),
+                                new XElement("Guid", result.Guid),
+                                new XElement("HomeDirectory", result.HomeDirectory),
+                                new XElement("HomeDrive", result.HomeDrive),
+                                new XElement("LastBadPasswordAttempt", result.LastBadPasswordAttempt),
+                                new XElement("LastLogon", result.LastLogon),
+                                new XElement("LastPasswordSet", result.LastPasswordSet),
+                                new XElement("MiddleName", result.MiddleName),
+                                new XElement("Name", result.Name),
+                                new XElement("PasswordNeverExpires", result.PasswordNeverExpires),
+                                new XElement("PasswordNotRequired", result.PasswordNotRequired),
+                                new XElement("PermittedLogonTimes", result.PermittedLogonTimes),
+                                new XElement("PermittedWorkstations", result.PermittedWorkstations),
+                                new XElement("SamAccountName", result.SamAccountName),
+                                new XElement("ScriptPath", result.ScriptPath),
+                                new XElement("Sid", result.Sid),
+                                new XElement("SmartcardLogonRequired", result.SmartcardLogonRequired),
+                                new XElement("StructuralObjectClass", result.StructuralObjectClass),
+                                new XElement("Surname", result.Surname),
+                                new XElement("UserCannotChangePassword", result.UserCannotChangePassword),
+                                new XElement("UserPrincipalName", result.UserPrincipalName),
+                                new XElement("VoiceTelephoneNumber", result.VoiceTelephoneNumber))
+                                );
+
+                // Checks if the "Generate Report" checkbox is ticked
+                if (Global.generateReport == true)
+                {
+                    // Adds report entry about the current user
+                    Utility.addToReportFile("User account \"" + result.SamAccountName + "\" info exported successfully");
+                }
+            }
+            catch ( Exception e )
+            {
+                // Checks if the "Generate Report" checkbox is ticked
+                if (Global.generateReport == true)
+                {
+                    // Adds report entry if there is an error exporting information
+                    Utility.addToReportFile("Error creating account \"" + result.SamAccountName + "\": " + e.Message);
+                }
+            }
         }
 
         /// <summary>
         /// This function queries all groups in Active Directory and saves their info to an XML file.
         /// </summary>
         /// <param name="QueryPrincipalGroups"></param>
-        public static void QueryPrincipalGroups(string folderPath)
+        public static void QueryPrincipalGroups(string folderPath, string fileName)
         {
 
             try
@@ -167,7 +198,7 @@ namespace Win32Xml
                 }
 
                 // Saves the document to defined folderpath
-                doc.Save(folderPath + "groups.xml");
+                doc.Save(folderPath + fileName + ".xml");
 
             }
 
@@ -185,7 +216,7 @@ namespace Win32Xml
         /// The info in XML file is stored like an SQL relation table.
         /// </summary>
         /// <param name="QueryGroupsMembers"></param>
-        public static void QueryGroupsMembers(string folderPath)
+        public static void QueryGroupsMembers(string folderPath, string fileName)
         {
 
             try
@@ -225,7 +256,7 @@ namespace Win32Xml
                 }
 
                 // Saves the file to the given folder path.
-                doc.Save(folderPath + "groupsusers.xml");
+                doc.Save(folderPath + fileName + ".xml");
 
             }
 
@@ -240,27 +271,24 @@ namespace Win32Xml
 
         /// <summary>
         /// This function generetes log file that will contain report of exported users, groups, and members of groups.
+        /// The report file is named after the date of export.
         /// </summary>
         /// <param name="filePath">Path where the file will be saved</param>
         /// <param name="fileName">Name of the file</param>
         public static void generateExportReportFile(string filePath)
         {
+            // Sets the path to the report file
+            Global.reportFullPath = filePath + "ExportReport_" + DateTime.Today.Date.ToString("dd.MM.yyyy") + ".txt";
+            
             // Creates new report file containing the current date.
-            StreamWriter file = new StreamWriter(filePath + "ExportReport_" + DateTime.Today + ".txt");
+            StreamWriter file = new StreamWriter(Global.reportFullPath);
 
             // Writes the heading of the file in the first line
-            file.WriteLine("ACTIVE DIRECTORY EXPORT REPORT " + DateTime.Today);
+            file.WriteLine("ACTIVE DIRECTORY EXPORT REPORT " + DateTime.Today.Date.ToString("dd.MM.yyyy"));
             file.WriteLine(String.Empty);
 
             // Closes the text file
             file.Close();
-        }
-
-        public static void addToExportReportFile(string filePath, string reportMessage)
-        {
-
-
-
         }
 
     }

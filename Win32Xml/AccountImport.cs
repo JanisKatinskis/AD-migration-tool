@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using System.DirectoryServices;
@@ -264,8 +265,15 @@ namespace Win32Xml
                 // Adds user to "Users" group.
                 groupPrinc.Members.Add(user);
 
-                //Saves changes to the group.
+                // Saves changes to the group.
                 groupPrinc.Save();
+
+                // If there is no home directory info, this step is skipped
+                if (HomeDirectory != String.Empty)
+                {
+                    // Creates home directory for the user.
+                    CreateHomeFolder(HomeDirectory, HomeDrive);
+                }
 
                 return;
 
@@ -376,6 +384,26 @@ namespace Win32Xml
             {
                 MessageBox.Show("An error occurred. {0}", e.Message);
             }
+        }
+
+
+        /// <summary>
+        /// Creates home folder for the user.
+        /// </summary>
+        /// <param name="HomeDirectory">HomeDirectory parameter from the Active Directory info file</param>
+        /// <param name="HomeDrive">HomeDrive parameter from the Active Directory info file</param>
+        public static void CreateHomeFolder(string HomeDirectory, string HomeDrive)
+        {
+            string homeFolder = HomeDirectory;
+            for (int i = 0; i < 3; i++)
+            {
+                homeFolder = homeFolder.Substring(homeFolder.IndexOf('\\') + 1);
+            }
+
+            homeFolder = HomeDrive + "\\" + homeFolder;
+
+            Directory.CreateDirectory(homeFolder);
+
         }
 
     }
