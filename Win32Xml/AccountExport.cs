@@ -56,7 +56,7 @@ namespace Win32Xml
                 foreach (UserPrincipal result in search.FindAll())
                 {
                     // calls the function to 
-                    WriteToExportFile(result, accountList);
+                    WriteToUserExportFile(result, accountList);
                 }
 
                 // Saves the document to defined folderpath
@@ -79,8 +79,8 @@ namespace Win32Xml
         /// Reads user account info from the Active Directory and writes it to XML file
         /// </summary>
         /// <param name="result">Instance of the current UserPrincipal</param>
-        /// <param name="accountList"></param>
-        public static void WriteToExportFile(UserPrincipal result, XElement accountList)
+        /// <param name="accountList">The main XML element</param>
+        public static void WriteToUserExportFile(UserPrincipal result, XElement accountList)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace Win32Xml
                 if (Global.generateReport == true)
                 {
                     // Adds report entry if there is an error exporting information
-                    Utility.addToReportFile("Error creating account \"" + result.SamAccountName + "\": " + e.Message);
+                    Utility.addToReportFile("Error exporting account \"" + result.SamAccountName + "\": " + e.Message);
                 }
             }
         }
@@ -178,22 +178,7 @@ namespace Win32Xml
                 foreach (GroupPrincipal result in search.FindAll())
                 {
 
-                    // Writes all the info about the group to XML.
-                    groupList.Add(new XElement("Group",
-                                    new XElement("Context", result.Context),
-                                    new XElement("ContextType", result.ContextType),
-                                    new XElement("Description", result.Description),
-                                    new XElement("DisplayName", result.DisplayName),
-                                    new XElement("DistinguishedName", result.DistinguishedName),
-                                    new XElement("GroupScope", result.GroupScope),
-                                    new XElement("Guid", result.Guid),
-                                    new XElement("IsSecurityGroup", result.IsSecurityGroup),
-                                    new XElement("Name", result.Name),
-                                    new XElement("SamAccountName", result.SamAccountName),
-                                    new XElement("Sid", result.Sid),
-                                    new XElement("StructuralObjectClass", result.StructuralObjectClass),
-                                    new XElement("UserPrincipalName", result.UserPrincipalName)
-                                    ));
+
 
                 }
 
@@ -206,6 +191,53 @@ namespace Win32Xml
             catch (Exception e)
             {
                 MessageBox.Show("An error occurred. {0}", e.Message);
+            }
+
+        }
+
+        /// <summary>
+        /// Reads group info from the Active Directory and writes it to XML file
+        /// </summary>
+        /// <param name="result">Instance of the current UserPrincipal</param>
+        /// <param name="accountList">The main XML element</param>
+        public static void WriteToGroupExportFile(GroupPrincipal result, XElement groupList)
+        {
+            try
+            {
+                // Writes all the info about the group to XML.
+                groupList.Add(new XElement("Group",
+                                new XElement("Context", result.Context),
+                                new XElement("ContextType", result.ContextType),
+                                new XElement("Description", result.Description),
+                                new XElement("DisplayName", result.DisplayName),
+                                new XElement("DistinguishedName", result.DistinguishedName),
+                                new XElement("GroupScope", result.GroupScope),
+                                new XElement("Guid", result.Guid),
+                                new XElement("IsSecurityGroup", result.IsSecurityGroup),
+                                new XElement("Name", result.Name),
+                                new XElement("SamAccountName", result.SamAccountName),
+                                new XElement("Sid", result.Sid),
+                                new XElement("StructuralObjectClass", result.StructuralObjectClass),
+                                new XElement("UserPrincipalName", result.UserPrincipalName)
+                                ));
+
+                // Checks if the "Generate Report" checkbox is ticked
+                if (Global.generateReport == true)
+                {
+                    // Adds report entry about the current user
+                    Utility.addToReportFile("Group \"" + result.SamAccountName + "\" info exported successfully");
+                }
+
+            }
+
+            catch (Exception e)
+            {
+                // Checks if the "Generate Report" checkbox is ticked
+                if (Global.generateReport == true)
+                {
+                    // Adds report entry if there is an error exporting information
+                    Utility.addToReportFile("Error exporting group \"" + result.SamAccountName + "\": " + e.Message);
+                }
             }
 
         }
@@ -230,8 +262,6 @@ namespace Win32Xml
                 // Searcher variable that will be used for querying Active Directory.
                 PrincipalSearcher search = new PrincipalSearcher(group);
 
-
-
                 // XML Document constructor
                 XDocument doc = new XDocument();
 
@@ -248,10 +278,6 @@ namespace Win32Xml
                     // Gets each user and creates an XML entry for it containing user SamAccountName and group SamAccountName.
                     foreach (Principal principal in result.GetGroups())
                     {
-                        groupList.Add(new XElement("User",
-                                        new XElement("Username", result.SamAccountName),
-                                        new XElement("GroupName", principal.SamAccountName)
-                                        ));
                     }
                 }
 
@@ -264,6 +290,28 @@ namespace Win32Xml
             catch (Exception e)
             {
                 MessageBox.Show("An error occurred. {0}", e.Message);
+            }
+
+        }
+
+        public static void WriteToGroupMemberExportFile(UserPrincipal result, Principal principal, XElement groupList)
+        {
+            try
+            {
+                groupList.Add(new XElement("User",
+                    new XElement("Username", result.SamAccountName),
+                    new XElement("GroupName", principal.SamAccountName)
+                    ));
+            }
+
+            catch (Exception e)
+            {
+                // Checks if the "Generate Report" checkbox is ticked
+                if (Global.generateReport == true)
+                {
+                    // Adds report entry if there is an error exporting information
+                    Utility.addToReportFile("Error exporting group \"" + principal.SamAccountName + "\" + user \"" + result.SamAccountName + "\": " + e.Message);
+                }
             }
 
         }

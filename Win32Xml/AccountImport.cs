@@ -19,54 +19,6 @@ namespace Win32Xml
     {
 
         /// <summary>
-        /// This function reads group info from XML file and gives it to MakePrincipalGroup() function to create groups.
-        /// </summary>
-        /// <param name="filePath">filepath to folder where the XML file is located</param>
-        public static void ReadGroups(string filePath)
-        {
-            
-            try
-            {
-
-                // Loads the XML document from the given filepath.
-                XDocument doc = XDocument.Load(filePath);
-
-                // Variable that contains group information queried from the XML file
-                var item = from q in doc.Descendants("Group")
-                           select new
-                           {
-                               Context = q.Element("Context").Value,
-                               ContextType = q.Element("ContextType").Value,
-                               Description = q.Element("Description").Value,
-                               DisplayName = q.Element("DisplayName").Value,
-                               DistinguishedName = q.Element("DistinguishedName").Value,
-                               GroupScope = q.Element("GroupScope").Value,
-                               Guid = q.Element("Guid").Value,
-                               IsSecurityGroup = q.Element("IsSecurityGroup").Value,
-                               Name = q.Element("Name").Value,
-                               SamAccountName = q.Element("SamAccountName").Value,
-                               Sid = q.Element("Sid").Value,
-                               StructuralObjectClass = q.Element("StructuralObjectClass").Value,
-                               UserPrincipalName = q.Element("UserPrincipalName").Value
-                           };
-
-                // Reads the info from each group and then relays it to function that is responsible for
-                // creating user groups and adding them to the Active Directory.
-                foreach (var x in item)
-                {
-                    MakePrincipalGroup(x.Description, x.DisplayName, x.DistinguishedName, 
-                        x.GroupScope, x.IsSecurityGroup, x.Name, x.SamAccountName, x.UserPrincipalName);
-                }
-            }
-
-            // Error handler
-            catch (Exception e)
-            {
-                MessageBox.Show("An error occurred. {0}", e.Message);
-            }
-        }
-
-        /// <summary>
         /// This function reads user info from XML file and gives it to MakePrincipalUser() function to create users.
         /// </summary>
         /// <param name="filePath">filepath to folder where the XML file is located</param>
@@ -112,7 +64,7 @@ namespace Win32Xml
                 // creating users and adding them to the Active Directory.
                 foreach (var x in item)
                 {
-                    MakePrincipalUser(x.AllowReversiblePasswordEncryption, x.DelegationPermitted, 
+                    MakePrincipalUser("123!@#QWE", x.AllowReversiblePasswordEncryption, x.DelegationPermitted, 
                         x.Description, x.DisplayName, x.EmailAddress, x.EmployeeId, x.Enabled, 
                         x.GivenName, x.HomeDirectory, x.HomeDrive, x.MiddleName, x.Name, 
                         x.PasswordNeverExpires, x.PasswordNotRequired, x.PermittedWorkstations, 
@@ -128,6 +80,55 @@ namespace Win32Xml
                 MessageBox.Show("An error occurred. {0}", e.Message);
             }
         }
+
+        /// <summary>
+        /// This function reads group info from XML file and gives it to MakePrincipalGroup() function to create groups.
+        /// </summary>
+        /// <param name="filePath">filepath to folder where the XML file is located</param>
+        public static void ReadGroups(string filePath)
+        {
+
+            try
+            {
+
+                // Loads the XML document from the given filepath.
+                XDocument doc = XDocument.Load(filePath);
+
+                // Variable that contains group information queried from the XML file
+                var item = from q in doc.Descendants("Group")
+                           select new
+                           {
+                               Context = q.Element("Context").Value,
+                               ContextType = q.Element("ContextType").Value,
+                               Description = q.Element("Description").Value,
+                               DisplayName = q.Element("DisplayName").Value,
+                               DistinguishedName = q.Element("DistinguishedName").Value,
+                               GroupScope = q.Element("GroupScope").Value,
+                               Guid = q.Element("Guid").Value,
+                               IsSecurityGroup = q.Element("IsSecurityGroup").Value,
+                               Name = q.Element("Name").Value,
+                               SamAccountName = q.Element("SamAccountName").Value,
+                               Sid = q.Element("Sid").Value,
+                               StructuralObjectClass = q.Element("StructuralObjectClass").Value,
+                               UserPrincipalName = q.Element("UserPrincipalName").Value
+                           };
+
+                // Reads the info from each group and then relays it to function that is responsible for
+                // creating user groups and adding them to the Active Directory.
+                foreach (var x in item)
+                {
+                    MakePrincipalGroup(x.Description, x.DisplayName, x.DistinguishedName,
+                        x.GroupScope, x.IsSecurityGroup, x.Name, x.SamAccountName, x.UserPrincipalName);
+                }
+            }
+
+            // Error handler
+            catch (Exception e)
+            {
+                MessageBox.Show("An error occurred. {0}", e.Message);
+            }
+        }
+
 
         /// <summary>
         /// This function reads user-group relational info and sends it to AddMemberToGroup() to add users to security groups.
@@ -171,6 +172,7 @@ namespace Win32Xml
         /// The function arguments are user parameters from the XML file.
         /// </summary>
         public static void MakePrincipalUser(
+            string password,
             string AllowReversiblePasswordEncryption,
             string DelegationPermitted,
             string Description,
@@ -207,7 +209,7 @@ namespace Win32Xml
                 user.Name = Name;
 
                 // Sets the initial password.
-                user.SetPassword("ala");
+                user.SetPassword(password);
 
                 /************************************************************************
                     The following actions add info to user's properties.
@@ -246,7 +248,7 @@ namespace Win32Xml
                 user.PasswordNotRequired = Convert.ToBoolean(PasswordNotRequired);
                 //user.PermittedLogonTimes = new byte[Convert.ToByte(PermittedLogonTimes)]; // Integer range error. Irrelevant, since it has seemingly infinite logon times.
                 //user.PermittedWorkstations = PermittedWorkstations; // read only
-                user.SamAccountName = SamAccountName; // read only
+                user.SamAccountName = SamAccountName; 
                 user.ScriptPath = ScriptPath;
                 //user.Sid = Sid; // read only
                 user.SmartcardLogonRequired = Convert.ToBoolean(SmartcardLogonRequired);
@@ -274,6 +276,9 @@ namespace Win32Xml
                     // Creates home directory for the user.
                     CreateHomeFolder(HomeDirectory, HomeDrive);
                 }
+
+                // Expires the password so the user will have to change it on next logon.
+                user.ExpirePasswordNow();
 
                 return;
 
