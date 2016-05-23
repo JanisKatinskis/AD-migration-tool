@@ -280,6 +280,13 @@ namespace Win32Xml
                 // Expires the password so the user will have to change it on next logon.
                 user.ExpirePasswordNow();
 
+                // Checks if the "Generate Report" checkbox is ticked
+                if (Global.generateReport == true)
+                {
+                    // Adds report entry about the current user
+                    Utility.addToReportFile("User \"" + SamAccountName + "\" created successfully");
+                }
+
                 return;
 
             }
@@ -287,7 +294,12 @@ namespace Win32Xml
             // Error handler
             catch (Exception e)
             {
-                MessageBox.Show("An error occurred. {0}", e.Message);
+                // Checks if the "Generate Report" checkbox is ticked
+                if (Global.generateReport == true)
+                {
+                    // Adds report entry if there is an error creating user
+                    Utility.addToReportFile("Error creating user \"" + SamAccountName + "\": " + e.Message);
+                }
             }
 
         }
@@ -350,12 +362,24 @@ namespace Win32Xml
                 // Saves the newly created group
                 group.Save();
 
+                // Checks if the "Generate Report" checkbox is ticked
+                if (Global.generateReport == true)
+                {
+                    // Adds report entry about the current group
+                    Utility.addToReportFile("Group \"" + SamAccountName + "\" created successfully");
+                }
+
             }
 
             // Error handler
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine("Error creating account: {0}", ex.Message);
+                // Checks if the "Generate Report" checkbox is ticked
+                if (Global.generateReport == true)
+                {
+                    // Adds report entry if there is an error creating user
+                    Utility.addToReportFile("Error creating group \"" + SamAccountName + "\": " + e.Message);
+                }
             }
 
         }
@@ -382,12 +406,25 @@ namespace Win32Xml
                 // Saves changes
                 group.Save();
 
+                // Checks if the "Generate Report" checkbox is ticked
+                if (Global.generateReport == true)
+                {
+                    // Adds report entry about the current group
+                    Utility.addToReportFile("User \"" + userName + "\" added to group \"" + groupName + "\" successfully");
+                }
+
+
             }
 
             // Error handler
             catch (Exception e)
             {
-                MessageBox.Show("An error occurred. {0}", e.Message);
+                // Checks if the "Generate Report" checkbox is ticked
+                if (Global.generateReport == true)
+                {
+                    // Adds report entry if there is an error creating user
+                    Utility.addToReportFile("Error adding user \"" + userName + "\" to group \"" + groupName + "\": " + e.Message);
+                }
             }
         }
 
@@ -410,6 +447,29 @@ namespace Win32Xml
             Directory.CreateDirectory(homeFolder);
 
         }
+
+        /// <summary>
+        /// This function generetes log file that will contain report of imported users, groups, and members of groups.
+        /// The report file is named after the date of import.
+        /// </summary>
+        /// <param name="filePath">Path where the file will be saved</param>
+        /// <param name="fileName">Name of the file</param>
+        public static void generateImportReportFile(string filePath)
+        {
+            // Sets the path to the report file
+            Global.reportFullPath = filePath + "ImportReport_" + DateTime.Today.Date.ToString("dd.MM.yyyy") + ".txt";
+
+            // Creates new report file containing the current date.
+            StreamWriter file = new StreamWriter(Global.reportFullPath);
+
+            // Writes the heading of the file in the first line
+            file.WriteLine("ACTIVE DIRECTORY IMPORT REPORT " + DateTime.Today.Date.ToString("dd.MM.yyyy"));
+            file.WriteLine(String.Empty);
+
+            // Closes the text file
+            file.Close();
+        }
+
 
     }
 

@@ -278,6 +278,9 @@ namespace Win32Xml
                     // Gets each user and creates an XML entry for it containing user SamAccountName and group SamAccountName.
                     foreach (Principal principal in result.GetGroups())
                     {
+
+                        WriteToGroupMemberExportFile(result, principal, groupList);
+
                     }
                 }
 

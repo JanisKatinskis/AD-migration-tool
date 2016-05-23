@@ -74,6 +74,8 @@ namespace Win32Xml
             {
                 Global.generateReport = true;
                 Global.reportPath = destinationPath.Text;
+
+                // Creates the report file
                 AccountExport.generateExportReportFile(Global.reportPath);
             }
             else
@@ -136,30 +138,77 @@ namespace Win32Xml
         private void importRunButton_Click(object sender, EventArgs e)
         {
 
+            // Sets wheter or not to generate report
+            if (generateReportCheckBox.Checked == true)
+            {
+                Global.generateReport = true;
+                Global.reportPath = importReportPath.Text;
+
+                // Create the report file
+                AccountImport.generateImportReportFile(Global.reportPath);
+            }
+            else
+            {
+                Global.generateReport = false;
+            }
+
+
             // Checks if "Export users" checkbox is checked. If true, executes function
             // that will query and export Active Directory user info.
             if (importUsers.Checked == true)
             {
-                ExportCurrentAction.Text = "Importing users...";
-                AccountImport.ReadUsers(importUserPath.Text);
+                // Cheks if the correct file format is selected
+                if (importUserPath.Text.EndsWith(".xml") == false)
+                {
+                    MessageBox.Show("Incorrect user file selected!", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    Global.importUserPath = importUserPath.Text;
+                    ExportCurrentAction.Text = "Importing users...";
+                    PasswordPrompt passwordPrompt = new PasswordPrompt();
+                    passwordPrompt.Show();
+                }
+
             }
 
             // Checks if "Export users" checkbox is checked. If true, executes function
             // that will query and export Active Directory user info.
             if (importGroups.Checked == true)
             {
+                // Cheks if the correct file format is selected
+                if (importGroupPath.Text.EndsWith(".xml") == false)
+                {
+                    MessageBox.Show("Incorrect group file selected!", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
                 ExportCurrentAction.Text = "Importing groups...";
                 AccountImport.ReadGroups(importGroupPath.Text);
+
+                }
             }
+
             if (importUsers.Checked == true && importGroups.Checked == true && importGroupUsers.Checked == true)
             {
+                // Cheks if the correct file format is selected
+                if (importGroupPath.Text.EndsWith(".xml") == false)
+                {
+                    MessageBox.Show("Incorrect group member file selected!", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
                 ExportCurrentAction.Text = "Adding users to groups...";
                 AccountImport.UsersToGroups(importGroupMembersPath.Text);
+                }
             }
 
             if (importUsers.Checked == false && importGroups.Checked == false && importGroupUsers.Checked == false)
             {
-                MessageBox.Show("You have not selected anything WTF", "Error",
+                MessageBox.Show("You have not selected any actions!", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
@@ -168,7 +217,7 @@ namespace Win32Xml
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            ExportCurrentAction.Text = "Everything done!";
+            //ExportCurrentAction.Text = "Everything done!";
         }
 
         private void sourceBrowseButton_Click(object sender, EventArgs e)
@@ -235,6 +284,7 @@ namespace Win32Xml
 
         private void importGroupBrowse_Click(object sender, EventArgs e)
         {
+            /**
             XDocument doc = XDocument.Load(importFileDialog.FileName);
 
             if (doc.FirstNode.ToString() != "group_list")
@@ -243,6 +293,7 @@ namespace Win32Xml
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
+            **/
 
 
             if (importFileDialog.ShowDialog() == DialogResult.OK)
@@ -253,6 +304,7 @@ namespace Win32Xml
 
         private void importGroupMembersBrowse_Click(object sender, EventArgs e)
         {
+            /**
             XDocument doc = XDocument.Load(importFileDialog.FileName);
 
             if (doc.FirstNode.ToString() != "groupsusers")
@@ -261,6 +313,7 @@ namespace Win32Xml
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
+            **/
 
 
             if (importFileDialog.ShowDialog() == DialogResult.OK)

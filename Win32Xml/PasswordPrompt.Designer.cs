@@ -87,6 +87,7 @@
             this.passwordSubmitButton.TabIndex = 4;
             this.passwordSubmitButton.Text = "OK";
             this.passwordSubmitButton.UseVisualStyleBackColor = true;
+            this.passwordSubmitButton.Click += new System.EventHandler(this.passwordSubmitButton_Click);
             // 
             // PasswordPrompt
             // 

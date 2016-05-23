@@ -36,7 +36,7 @@
             this.groupCheckBox = new System.Windows.Forms.CheckBox();
             this.destinationPathLabel = new System.Windows.Forms.Label();
             this.ImportCurrentAction = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.exportTab = new System.Windows.Forms.TabPage();
             this.ExportCurrentAction = new System.Windows.Forms.Label();
             this.ExportProgressBar = new System.Windows.Forms.ProgressBar();
             this.generateReportCheckBox = new System.Windows.Forms.CheckBox();
@@ -47,7 +47,7 @@
             this.userFileName = new System.Windows.Forms.TextBox();
             this.groupFileName = new System.Windows.Forms.TextBox();
             this.groupMemberFileName = new System.Windows.Forms.TextBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.importTab = new System.Windows.Forms.TabPage();
             this.importGroupMembersBrowse = new System.Windows.Forms.Button();
             this.importGroupBrowse = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -64,15 +64,14 @@
             this.importUserPath = new System.Windows.Forms.TextBox();
             this.importUserBrowse = new System.Windows.Forms.Button();
             this.importRunButton = new System.Windows.Forms.Button();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.somethingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.somethingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.BackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.importFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.importReportPathLabel = new System.Windows.Forms.Label();
+            this.importReportPath = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.ImportCurrentAction.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.exportTab.SuspendLayout();
+            this.importTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // exportFolderBrowserDialog
@@ -91,7 +90,7 @@
             // 
             // pathBrowseButton
             // 
-            this.pathBrowseButton.Location = new System.Drawing.Point(405, 119);
+            this.pathBrowseButton.Location = new System.Drawing.Point(405, 120);
             this.pathBrowseButton.Name = "pathBrowseButton";
             this.pathBrowseButton.Size = new System.Drawing.Size(74, 20);
             this.pathBrowseButton.TabIndex = 2;
@@ -132,7 +131,7 @@
             // destinationPathLabel
             // 
             this.destinationPathLabel.AutoSize = true;
-            this.destinationPathLabel.Location = new System.Drawing.Point(8, 123);
+            this.destinationPathLabel.Location = new System.Drawing.Point(8, 124);
             this.destinationPathLabel.Name = "destinationPathLabel";
             this.destinationPathLabel.Size = new System.Drawing.Size(87, 13);
             this.destinationPathLabel.TabIndex = 1;
@@ -142,41 +141,41 @@
             // 
             // ImportCurrentAction
             // 
-            this.ImportCurrentAction.Controls.Add(this.tabPage1);
-            this.ImportCurrentAction.Controls.Add(this.tabPage2);
+            this.ImportCurrentAction.Controls.Add(this.exportTab);
+            this.ImportCurrentAction.Controls.Add(this.importTab);
             this.ImportCurrentAction.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ImportCurrentAction.Location = new System.Drawing.Point(0, 24);
+            this.ImportCurrentAction.Location = new System.Drawing.Point(0, 0);
             this.ImportCurrentAction.Name = "ImportCurrentAction";
             this.ImportCurrentAction.SelectedIndex = 0;
-            this.ImportCurrentAction.Size = new System.Drawing.Size(520, 331);
+            this.ImportCurrentAction.Size = new System.Drawing.Size(520, 355);
             this.ImportCurrentAction.TabIndex = 5;
             // 
-            // tabPage1
+            // exportTab
             // 
-            this.tabPage1.Controls.Add(this.ExportCurrentAction);
-            this.tabPage1.Controls.Add(this.ExportProgressBar);
-            this.tabPage1.Controls.Add(this.generateReportCheckBox);
-            this.tabPage1.Controls.Add(this.groupUserCheckBox);
-            this.tabPage1.Controls.Add(this.userFileNameLabel);
-            this.tabPage1.Controls.Add(this.GroupfileNameLabel);
-            this.tabPage1.Controls.Add(this.groupMembersFileNameLabel);
-            this.tabPage1.Controls.Add(this.destinationPathLabel);
-            this.tabPage1.Controls.Add(this.groupCheckBox);
-            this.tabPage1.Controls.Add(this.userFileName);
-            this.tabPage1.Controls.Add(this.groupFileName);
-            this.tabPage1.Controls.Add(this.groupMemberFileName);
-            this.tabPage1.Controls.Add(this.destinationPath);
-            this.tabPage1.Controls.Add(this.userCheckBox);
-            this.tabPage1.Controls.Add(this.pathBrowseButton);
-            this.tabPage1.Controls.Add(this.exportRunButton);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(512, 305);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Export";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click_1);
+            this.exportTab.Controls.Add(this.ExportCurrentAction);
+            this.exportTab.Controls.Add(this.ExportProgressBar);
+            this.exportTab.Controls.Add(this.generateReportCheckBox);
+            this.exportTab.Controls.Add(this.groupUserCheckBox);
+            this.exportTab.Controls.Add(this.userFileNameLabel);
+            this.exportTab.Controls.Add(this.GroupfileNameLabel);
+            this.exportTab.Controls.Add(this.groupMembersFileNameLabel);
+            this.exportTab.Controls.Add(this.destinationPathLabel);
+            this.exportTab.Controls.Add(this.groupCheckBox);
+            this.exportTab.Controls.Add(this.userFileName);
+            this.exportTab.Controls.Add(this.groupFileName);
+            this.exportTab.Controls.Add(this.groupMemberFileName);
+            this.exportTab.Controls.Add(this.destinationPath);
+            this.exportTab.Controls.Add(this.userCheckBox);
+            this.exportTab.Controls.Add(this.pathBrowseButton);
+            this.exportTab.Controls.Add(this.exportRunButton);
+            this.exportTab.Location = new System.Drawing.Point(4, 22);
+            this.exportTab.Name = "exportTab";
+            this.exportTab.Padding = new System.Windows.Forms.Padding(3);
+            this.exportTab.Size = new System.Drawing.Size(512, 329);
+            this.exportTab.TabIndex = 0;
+            this.exportTab.Text = "Export";
+            this.exportTab.UseVisualStyleBackColor = true;
+            this.exportTab.Click += new System.EventHandler(this.tabPage1_Click_1);
             // 
             // ExportCurrentAction
             // 
@@ -224,7 +223,7 @@
             // userFileNameLabel
             // 
             this.userFileNameLabel.AutoSize = true;
-            this.userFileNameLabel.Location = new System.Drawing.Point(8, 19);
+            this.userFileNameLabel.Location = new System.Drawing.Point(48, 22);
             this.userFileNameLabel.Name = "userFileNameLabel";
             this.userFileNameLabel.Size = new System.Drawing.Size(124, 13);
             this.userFileNameLabel.TabIndex = 1;
@@ -235,7 +234,7 @@
             // GroupfileNameLabel
             // 
             this.GroupfileNameLabel.AutoSize = true;
-            this.GroupfileNameLabel.Location = new System.Drawing.Point(8, 45);
+            this.GroupfileNameLabel.Location = new System.Drawing.Point(41, 48);
             this.GroupfileNameLabel.Name = "GroupfileNameLabel";
             this.GroupfileNameLabel.Size = new System.Drawing.Size(131, 13);
             this.GroupfileNameLabel.TabIndex = 1;
@@ -246,7 +245,7 @@
             // groupMembersFileNameLabel
             // 
             this.groupMembersFileNameLabel.AutoSize = true;
-            this.groupMembersFileNameLabel.Location = new System.Drawing.Point(8, 71);
+            this.groupMembersFileNameLabel.Location = new System.Drawing.Point(12, 74);
             this.groupMembersFileNameLabel.Name = "groupMembersFileNameLabel";
             this.groupMembersFileNameLabel.Size = new System.Drawing.Size(160, 13);
             this.groupMembersFileNameLabel.TabIndex = 1;
@@ -278,31 +277,34 @@
             this.groupMemberFileName.TabIndex = 0;
             this.groupMemberFileName.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // tabPage2
+            // importTab
             // 
-            this.tabPage2.Controls.Add(this.importGroupMembersBrowse);
-            this.tabPage2.Controls.Add(this.importGroupBrowse);
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.ImportProgressBar);
-            this.tabPage2.Controls.Add(this.importReport);
-            this.tabPage2.Controls.Add(this.importGroups);
-            this.tabPage2.Controls.Add(this.importGroupUsers);
-            this.tabPage2.Controls.Add(this.importUsers);
-            this.tabPage2.Controls.Add(this.importGroupMembersLabel);
-            this.tabPage2.Controls.Add(this.importGroupLabel);
-            this.tabPage2.Controls.Add(this.importGroupMembersPath);
-            this.tabPage2.Controls.Add(this.importGroupPath);
-            this.tabPage2.Controls.Add(this.importUserLabel);
-            this.tabPage2.Controls.Add(this.importUserPath);
-            this.tabPage2.Controls.Add(this.importUserBrowse);
-            this.tabPage2.Controls.Add(this.importRunButton);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(512, 305);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Import";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.importTab.Controls.Add(this.importReportPathLabel);
+            this.importTab.Controls.Add(this.importReportPath);
+            this.importTab.Controls.Add(this.button1);
+            this.importTab.Controls.Add(this.importGroupMembersBrowse);
+            this.importTab.Controls.Add(this.importGroupBrowse);
+            this.importTab.Controls.Add(this.label1);
+            this.importTab.Controls.Add(this.ImportProgressBar);
+            this.importTab.Controls.Add(this.importReport);
+            this.importTab.Controls.Add(this.importGroups);
+            this.importTab.Controls.Add(this.importGroupUsers);
+            this.importTab.Controls.Add(this.importUsers);
+            this.importTab.Controls.Add(this.importGroupMembersLabel);
+            this.importTab.Controls.Add(this.importGroupLabel);
+            this.importTab.Controls.Add(this.importGroupMembersPath);
+            this.importTab.Controls.Add(this.importGroupPath);
+            this.importTab.Controls.Add(this.importUserLabel);
+            this.importTab.Controls.Add(this.importUserPath);
+            this.importTab.Controls.Add(this.importUserBrowse);
+            this.importTab.Controls.Add(this.importRunButton);
+            this.importTab.Location = new System.Drawing.Point(4, 22);
+            this.importTab.Name = "importTab";
+            this.importTab.Padding = new System.Windows.Forms.Padding(3);
+            this.importTab.Size = new System.Drawing.Size(512, 329);
+            this.importTab.TabIndex = 1;
+            this.importTab.Text = "Import";
+            this.importTab.UseVisualStyleBackColor = true;
             // 
             // importGroupMembersBrowse
             // 
@@ -395,7 +397,7 @@
             // importGroupLabel
             // 
             this.importGroupLabel.AutoSize = true;
-            this.importGroupLabel.Location = new System.Drawing.Point(47, 62);
+            this.importGroupLabel.Location = new System.Drawing.Point(47, 59);
             this.importGroupLabel.Name = "importGroupLabel";
             this.importGroupLabel.Size = new System.Drawing.Size(55, 13);
             this.importGroupLabel.TabIndex = 6;
@@ -422,7 +424,7 @@
             // importUserLabel
             // 
             this.importUserLabel.AutoSize = true;
-            this.importUserLabel.Location = new System.Drawing.Point(54, 33);
+            this.importUserLabel.Location = new System.Drawing.Point(54, 30);
             this.importUserLabel.Name = "importUserLabel";
             this.importUserLabel.Size = new System.Drawing.Size(48, 13);
             this.importUserLabel.TabIndex = 6;
@@ -449,37 +451,13 @@
             // 
             // importRunButton
             // 
-            this.importRunButton.Location = new System.Drawing.Point(415, 177);
+            this.importRunButton.Location = new System.Drawing.Point(415, 229);
             this.importRunButton.Name = "importRunButton";
             this.importRunButton.Size = new System.Drawing.Size(74, 20);
             this.importRunButton.TabIndex = 8;
             this.importRunButton.Text = "Run";
             this.importRunButton.UseVisualStyleBackColor = true;
             this.importRunButton.Click += new System.EventHandler(this.importRunButton_Click);
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.somethingToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(520, 24);
-            this.menuStrip1.TabIndex = 6;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // somethingToolStripMenuItem
-            // 
-            this.somethingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.somethingToolStripMenuItem1});
-            this.somethingToolStripMenuItem.Name = "somethingToolStripMenuItem";
-            this.somethingToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
-            this.somethingToolStripMenuItem.Text = "Something";
-            // 
-            // somethingToolStripMenuItem1
-            // 
-            this.somethingToolStripMenuItem1.Name = "somethingToolStripMenuItem1";
-            this.somethingToolStripMenuItem1.Size = new System.Drawing.Size(132, 22);
-            this.somethingToolStripMenuItem1.Text = "Something";
             // 
             // BackgroundWorker
             // 
@@ -493,27 +471,48 @@
             this.importFileDialog.FileName = "openFileDialog1";
             this.importFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.importFileDialog_FileOk);
             // 
+            // importReportPathLabel
+            // 
+            this.importReportPathLabel.AutoSize = true;
+            this.importReportPathLabel.Location = new System.Drawing.Point(36, 203);
+            this.importReportPathLabel.Name = "importReportPathLabel";
+            this.importReportPathLabel.Size = new System.Drawing.Size(66, 13);
+            this.importReportPathLabel.TabIndex = 18;
+            this.importReportPathLabel.Text = "Report path:";
+            this.importReportPathLabel.UseMnemonic = false;
+            // 
+            // importReportPath
+            // 
+            this.importReportPath.Location = new System.Drawing.Point(108, 200);
+            this.importReportPath.Name = "importReportPath";
+            this.importReportPath.Size = new System.Drawing.Size(301, 20);
+            this.importReportPath.TabIndex = 17;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(415, 200);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(74, 20);
+            this.button1.TabIndex = 19;
+            this.button1.Text = "Browse...";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // GuiForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(520, 355);
             this.Controls.Add(this.ImportCurrentAction);
-            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "GuiForm";
-            this.Text = "User group migration thingy";
+            this.Text = "Active Directory Migration Tool";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ImportCurrentAction.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.exportTab.ResumeLayout(false);
+            this.exportTab.PerformLayout();
+            this.importTab.ResumeLayout(false);
+            this.importTab.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -525,14 +524,11 @@
         private System.Windows.Forms.Button pathBrowseButton;
         private System.Windows.Forms.Button exportRunButton;
         private System.Windows.Forms.TabControl ImportCurrentAction;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage exportTab;
+        private System.Windows.Forms.TabPage importTab;
         private System.Windows.Forms.Label importUserLabel;
         private System.Windows.Forms.TextBox importUserPath;
         private System.Windows.Forms.Button importRunButton;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem somethingToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem somethingToolStripMenuItem1;
         private System.Windows.Forms.CheckBox groupUserCheckBox;
         private System.Windows.Forms.CheckBox importReport;
         private System.Windows.Forms.CheckBox importGroups;
@@ -559,6 +555,9 @@
         private System.Windows.Forms.TextBox groupMemberFileName;
         public System.Windows.Forms.CheckBox generateReportCheckBox;
         private System.Windows.Forms.TextBox destinationPath;
+        private System.Windows.Forms.Label importReportPathLabel;
+        private System.Windows.Forms.TextBox importReportPath;
+        private System.Windows.Forms.Button button1;
     }
 }
 

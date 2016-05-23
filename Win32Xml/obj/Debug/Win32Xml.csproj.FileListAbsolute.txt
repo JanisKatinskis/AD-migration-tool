@@ -10,3 +10,10 @@ D:\Win32Xml\Win32Xml\obj\Debug\Win32Xml.GuiForm.resources
 C:\Users\Janis\Documents\LU DF\kval\Win32Xml\Win32Xml\bin\Debug\Win32Xml.exe.config
 C:\Users\Janis\Documents\LU DF\kval\Win32Xml\Win32Xml\obj\Debug\Win32Xml.exe
 C:\Users\Janis\Documents\LU DF\kval\Win32Xml\Win32Xml\obj\Debug\Win32Xml.pdb
+C:\Users\Janis\Documents\LU DF\kval\Win32Xml\Win32Xml\obj\Debug\Win32Xml.csprojResolveAssemblyReference.cache
+C:\Users\Janis\Documents\LU DF\kval\Win32Xml\Win32Xml\bin\Debug\Win32Xml.exe
+C:\Users\Janis\Documents\LU DF\kval\Win32Xml\Win32Xml\bin\Debug\Win32Xml.pdb
+C:\Users\Janis\Documents\LU DF\kval\Win32Xml\Win32Xml\obj\Debug\Win32Xml.GuiForm.resources
+C:\Users\Janis\Documents\LU DF\kval\Win32Xml\Win32Xml\obj\Debug\Win32Xml.PasswordPrompt.resources
+C:\Users\Janis\Documents\LU DF\kval\Win32Xml\Win32Xml\obj\Debug\Win32Xml.Properties.Resources.resources
+C:\Users\Janis\Documents\LU DF\kval\Win32Xml\Win32Xml\obj\Debug\Win32Xml.csproj.GenerateResource.Cache
