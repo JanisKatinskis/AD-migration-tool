@@ -178,7 +178,8 @@ namespace Win32Xml
                 foreach (GroupPrincipal result in search.FindAll())
                 {
 
-
+                    // Writes the info of the current group to the file
+                    WriteToGroupExportFile(result, groupList);
 
                 }
 
@@ -190,7 +191,7 @@ namespace Win32Xml
             // Error handler
             catch (Exception e)
             {
-                MessageBox.Show("An error occurred. {0}", e.Message);
+                MessageBox.Show(e.Message, "Error");
             }
 
         }
@@ -279,6 +280,7 @@ namespace Win32Xml
                     foreach (Principal principal in result.GetGroups())
                     {
 
+                        // Writes the info of the current group to the file
                         WriteToGroupMemberExportFile(result, principal, groupList);
 
                     }

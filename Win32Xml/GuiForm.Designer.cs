@@ -48,6 +48,9 @@
             this.groupFileName = new System.Windows.Forms.TextBox();
             this.groupMemberFileName = new System.Windows.Forms.TextBox();
             this.importTab = new System.Windows.Forms.TabPage();
+            this.importReportPathLabel = new System.Windows.Forms.Label();
+            this.importReportPath = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.importGroupMembersBrowse = new System.Windows.Forms.Button();
             this.importGroupBrowse = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -66,9 +69,6 @@
             this.importRunButton = new System.Windows.Forms.Button();
             this.BackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.importFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.importReportPathLabel = new System.Windows.Forms.Label();
-            this.importReportPath = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.ImportCurrentAction.SuspendLayout();
             this.exportTab.SuspendLayout();
             this.importTab.SuspendLayout();
@@ -306,6 +306,32 @@
             this.importTab.Text = "Import";
             this.importTab.UseVisualStyleBackColor = true;
             // 
+            // importReportPathLabel
+            // 
+            this.importReportPathLabel.AutoSize = true;
+            this.importReportPathLabel.Location = new System.Drawing.Point(36, 203);
+            this.importReportPathLabel.Name = "importReportPathLabel";
+            this.importReportPathLabel.Size = new System.Drawing.Size(66, 13);
+            this.importReportPathLabel.TabIndex = 18;
+            this.importReportPathLabel.Text = "Report path:";
+            this.importReportPathLabel.UseMnemonic = false;
+            // 
+            // importReportPath
+            // 
+            this.importReportPath.Location = new System.Drawing.Point(108, 200);
+            this.importReportPath.Name = "importReportPath";
+            this.importReportPath.Size = new System.Drawing.Size(301, 20);
+            this.importReportPath.TabIndex = 17;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(415, 200);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(74, 20);
+            this.button1.TabIndex = 19;
+            this.button1.Text = "Browse...";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // importGroupMembersBrowse
             // 
             this.importGroupMembersBrowse.Location = new System.Drawing.Point(415, 81);
@@ -470,32 +496,6 @@
             this.importFileDialog.DefaultExt = "xml";
             this.importFileDialog.FileName = "openFileDialog1";
             this.importFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.importFileDialog_FileOk);
-            // 
-            // importReportPathLabel
-            // 
-            this.importReportPathLabel.AutoSize = true;
-            this.importReportPathLabel.Location = new System.Drawing.Point(36, 203);
-            this.importReportPathLabel.Name = "importReportPathLabel";
-            this.importReportPathLabel.Size = new System.Drawing.Size(66, 13);
-            this.importReportPathLabel.TabIndex = 18;
-            this.importReportPathLabel.Text = "Report path:";
-            this.importReportPathLabel.UseMnemonic = false;
-            // 
-            // importReportPath
-            // 
-            this.importReportPath.Location = new System.Drawing.Point(108, 200);
-            this.importReportPath.Name = "importReportPath";
-            this.importReportPath.Size = new System.Drawing.Size(301, 20);
-            this.importReportPath.TabIndex = 17;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(415, 200);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(74, 20);
-            this.button1.TabIndex = 19;
-            this.button1.Text = "Browse...";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // GuiForm
             // 

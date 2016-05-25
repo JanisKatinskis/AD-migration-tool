@@ -64,7 +64,7 @@ namespace Win32Xml
                 // creating users and adding them to the Active Directory.
                 foreach (var x in item)
                 {
-                    MakePrincipalUser("123!@#QWE", x.AllowReversiblePasswordEncryption, x.DelegationPermitted, 
+                    MakePrincipalUser(Global.password, x.AllowReversiblePasswordEncryption, x.DelegationPermitted, 
                         x.Description, x.DisplayName, x.EmailAddress, x.EmployeeId, x.Enabled, 
                         x.GivenName, x.HomeDirectory, x.HomeDrive, x.MiddleName, x.Name, 
                         x.PasswordNeverExpires, x.PasswordNotRequired, x.PermittedWorkstations, 
