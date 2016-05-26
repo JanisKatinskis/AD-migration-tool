@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.exportFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.FolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.exportRunButton = new System.Windows.Forms.Button();
             this.pathBrowseButton = new System.Windows.Forms.Button();
             this.userCheckBox = new System.Windows.Forms.CheckBox();
@@ -38,7 +38,6 @@
             this.ImportCurrentAction = new System.Windows.Forms.TabControl();
             this.exportTab = new System.Windows.Forms.TabPage();
             this.ExportCurrentAction = new System.Windows.Forms.Label();
-            this.ExportProgressBar = new System.Windows.Forms.ProgressBar();
             this.generateReportCheckBox = new System.Windows.Forms.CheckBox();
             this.groupUserCheckBox = new System.Windows.Forms.CheckBox();
             this.userFileNameLabel = new System.Windows.Forms.Label();
@@ -50,11 +49,10 @@
             this.importTab = new System.Windows.Forms.TabPage();
             this.importReportPathLabel = new System.Windows.Forms.Label();
             this.importReportPath = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.importReportPathBrowseButton = new System.Windows.Forms.Button();
             this.importGroupMembersBrowse = new System.Windows.Forms.Button();
             this.importGroupBrowse = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.ImportProgressBar = new System.Windows.Forms.ProgressBar();
+            this.CurrentImportAction = new System.Windows.Forms.Label();
             this.importReport = new System.Windows.Forms.CheckBox();
             this.importGroups = new System.Windows.Forms.CheckBox();
             this.importGroupUsers = new System.Windows.Forms.CheckBox();
@@ -74,9 +72,9 @@
             this.importTab.SuspendLayout();
             this.SuspendLayout();
             // 
-            // exportFolderBrowserDialog
+            // FolderBrowserDialog
             // 
-            this.exportFolderBrowserDialog.HelpRequest += new System.EventHandler(this.folderBrowserDialog1_HelpRequest);
+            this.FolderBrowserDialog.HelpRequest += new System.EventHandler(this.folderBrowserDialog1_HelpRequest);
             // 
             // exportRunButton
             // 
@@ -147,13 +145,12 @@
             this.ImportCurrentAction.Location = new System.Drawing.Point(0, 0);
             this.ImportCurrentAction.Name = "ImportCurrentAction";
             this.ImportCurrentAction.SelectedIndex = 0;
-            this.ImportCurrentAction.Size = new System.Drawing.Size(520, 355);
+            this.ImportCurrentAction.Size = new System.Drawing.Size(520, 308);
             this.ImportCurrentAction.TabIndex = 5;
             // 
             // exportTab
             // 
             this.exportTab.Controls.Add(this.ExportCurrentAction);
-            this.exportTab.Controls.Add(this.ExportProgressBar);
             this.exportTab.Controls.Add(this.generateReportCheckBox);
             this.exportTab.Controls.Add(this.groupUserCheckBox);
             this.exportTab.Controls.Add(this.userFileNameLabel);
@@ -171,7 +168,7 @@
             this.exportTab.Location = new System.Drawing.Point(4, 22);
             this.exportTab.Name = "exportTab";
             this.exportTab.Padding = new System.Windows.Forms.Padding(3);
-            this.exportTab.Size = new System.Drawing.Size(512, 329);
+            this.exportTab.Size = new System.Drawing.Size(512, 282);
             this.exportTab.TabIndex = 0;
             this.exportTab.Text = "Export";
             this.exportTab.UseVisualStyleBackColor = true;
@@ -181,20 +178,12 @@
             // 
             this.ExportCurrentAction.AutoSize = true;
             this.ExportCurrentAction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.ExportCurrentAction.Location = new System.Drawing.Point(10, 258);
+            this.ExportCurrentAction.Location = new System.Drawing.Point(6, 264);
             this.ExportCurrentAction.Name = "ExportCurrentAction";
-            this.ExportCurrentAction.Size = new System.Drawing.Size(103, 13);
+            this.ExportCurrentAction.Size = new System.Drawing.Size(79, 13);
             this.ExportCurrentAction.TabIndex = 11;
-            this.ExportCurrentAction.Text = "Doing some thingy...";
+            this.ExportCurrentAction.Text = "Ready to work!";
             this.ExportCurrentAction.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // ExportProgressBar
-            // 
-            this.ExportProgressBar.Location = new System.Drawing.Point(8, 274);
-            this.ExportProgressBar.Name = "ExportProgressBar";
-            this.ExportProgressBar.Size = new System.Drawing.Size(498, 23);
-            this.ExportProgressBar.TabIndex = 10;
-            this.ExportProgressBar.Click += new System.EventHandler(this.ExportProgressBar_Click);
             // 
             // generateReportCheckBox
             // 
@@ -281,11 +270,10 @@
             // 
             this.importTab.Controls.Add(this.importReportPathLabel);
             this.importTab.Controls.Add(this.importReportPath);
-            this.importTab.Controls.Add(this.button1);
+            this.importTab.Controls.Add(this.importReportPathBrowseButton);
             this.importTab.Controls.Add(this.importGroupMembersBrowse);
             this.importTab.Controls.Add(this.importGroupBrowse);
-            this.importTab.Controls.Add(this.label1);
-            this.importTab.Controls.Add(this.ImportProgressBar);
+            this.importTab.Controls.Add(this.CurrentImportAction);
             this.importTab.Controls.Add(this.importReport);
             this.importTab.Controls.Add(this.importGroups);
             this.importTab.Controls.Add(this.importGroupUsers);
@@ -301,7 +289,7 @@
             this.importTab.Location = new System.Drawing.Point(4, 22);
             this.importTab.Name = "importTab";
             this.importTab.Padding = new System.Windows.Forms.Padding(3);
-            this.importTab.Size = new System.Drawing.Size(512, 329);
+            this.importTab.Size = new System.Drawing.Size(512, 282);
             this.importTab.TabIndex = 1;
             this.importTab.Text = "Import";
             this.importTab.UseVisualStyleBackColor = true;
@@ -323,20 +311,21 @@
             this.importReportPath.Size = new System.Drawing.Size(301, 20);
             this.importReportPath.TabIndex = 17;
             // 
-            // button1
+            // importReportPathBrowseButton
             // 
-            this.button1.Location = new System.Drawing.Point(415, 200);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(74, 20);
-            this.button1.TabIndex = 19;
-            this.button1.Text = "Browse...";
-            this.button1.UseVisualStyleBackColor = true;
+            this.importReportPathBrowseButton.Location = new System.Drawing.Point(415, 200);
+            this.importReportPathBrowseButton.Name = "importReportPathBrowseButton";
+            this.importReportPathBrowseButton.Size = new System.Drawing.Size(74, 20);
+            this.importReportPathBrowseButton.TabIndex = 19;
+            this.importReportPathBrowseButton.Text = "Browse...";
+            this.importReportPathBrowseButton.UseVisualStyleBackColor = true;
+            this.importReportPathBrowseButton.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // importGroupMembersBrowse
             // 
-            this.importGroupMembersBrowse.Location = new System.Drawing.Point(415, 81);
+            this.importGroupMembersBrowse.Location = new System.Drawing.Point(415, 82);
             this.importGroupMembersBrowse.Name = "importGroupMembersBrowse";
-            this.importGroupMembersBrowse.Size = new System.Drawing.Size(75, 23);
+            this.importGroupMembersBrowse.Size = new System.Drawing.Size(75, 20);
             this.importGroupMembersBrowse.TabIndex = 16;
             this.importGroupMembersBrowse.Text = "Browse...";
             this.importGroupMembersBrowse.UseVisualStyleBackColor = true;
@@ -344,35 +333,31 @@
             // 
             // importGroupBrowse
             // 
-            this.importGroupBrowse.Location = new System.Drawing.Point(415, 52);
+            this.importGroupBrowse.Location = new System.Drawing.Point(415, 56);
             this.importGroupBrowse.Name = "importGroupBrowse";
-            this.importGroupBrowse.Size = new System.Drawing.Size(75, 23);
+            this.importGroupBrowse.Size = new System.Drawing.Size(75, 20);
             this.importGroupBrowse.TabIndex = 15;
             this.importGroupBrowse.Text = "Browse...";
             this.importGroupBrowse.UseVisualStyleBackColor = true;
             this.importGroupBrowse.Click += new System.EventHandler(this.importGroupBrowse_Click);
             // 
-            // label1
+            // CurrentImportAction
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.label1.Location = new System.Drawing.Point(6, 260);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(103, 13);
-            this.label1.TabIndex = 14;
-            this.label1.Text = "Doing some thingy...";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // ImportProgressBar
-            // 
-            this.ImportProgressBar.Location = new System.Drawing.Point(3, 276);
-            this.ImportProgressBar.Name = "ImportProgressBar";
-            this.ImportProgressBar.Size = new System.Drawing.Size(506, 23);
-            this.ImportProgressBar.TabIndex = 13;
+            this.CurrentImportAction.AutoSize = true;
+            this.CurrentImportAction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.CurrentImportAction.Location = new System.Drawing.Point(6, 264);
+            this.CurrentImportAction.Name = "CurrentImportAction";
+            this.CurrentImportAction.Size = new System.Drawing.Size(79, 13);
+            this.CurrentImportAction.TabIndex = 14;
+            this.CurrentImportAction.Text = "Ready to work!";
+            this.CurrentImportAction.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.CurrentImportAction.Click += new System.EventHandler(this.label1_Click_2);
             // 
             // importReport
             // 
             this.importReport.AutoSize = true;
+            this.importReport.Checked = true;
+            this.importReport.CheckState = System.Windows.Forms.CheckState.Checked;
             this.importReport.Location = new System.Drawing.Point(108, 177);
             this.importReport.Name = "importReport";
             this.importReport.Size = new System.Drawing.Size(100, 17);
@@ -450,7 +435,7 @@
             // importUserLabel
             // 
             this.importUserLabel.AutoSize = true;
-            this.importUserLabel.Location = new System.Drawing.Point(54, 30);
+            this.importUserLabel.Location = new System.Drawing.Point(54, 33);
             this.importUserLabel.Name = "importUserLabel";
             this.importUserLabel.Size = new System.Drawing.Size(48, 13);
             this.importUserLabel.TabIndex = 6;
@@ -459,7 +444,7 @@
             // 
             // importUserPath
             // 
-            this.importUserPath.Location = new System.Drawing.Point(108, 26);
+            this.importUserPath.Location = new System.Drawing.Point(108, 30);
             this.importUserPath.Name = "importUserPath";
             this.importUserPath.Size = new System.Drawing.Size(301, 20);
             this.importUserPath.TabIndex = 5;
@@ -467,7 +452,7 @@
             // 
             // importUserBrowse
             // 
-            this.importUserBrowse.Location = new System.Drawing.Point(415, 26);
+            this.importUserBrowse.Location = new System.Drawing.Point(416, 30);
             this.importUserBrowse.Name = "importUserBrowse";
             this.importUserBrowse.Size = new System.Drawing.Size(74, 20);
             this.importUserBrowse.TabIndex = 7;
@@ -501,7 +486,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(520, 355);
+            this.ClientSize = new System.Drawing.Size(520, 308);
             this.Controls.Add(this.ImportCurrentAction);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "GuiForm";
@@ -517,7 +502,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.FolderBrowserDialog exportFolderBrowserDialog;
+        private System.Windows.Forms.FolderBrowserDialog FolderBrowserDialog;
         private System.Windows.Forms.Label destinationPathLabel;
         private System.Windows.Forms.CheckBox groupCheckBox;
         private System.Windows.Forms.CheckBox userCheckBox;
@@ -535,10 +520,8 @@
         private System.Windows.Forms.CheckBox importGroupUsers;
         private System.Windows.Forms.CheckBox importUsers;
         private System.ComponentModel.BackgroundWorker BackgroundWorker;
-        private System.Windows.Forms.ProgressBar ExportProgressBar;
         private System.Windows.Forms.Label ExportCurrentAction;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ProgressBar ImportProgressBar;
+        private System.Windows.Forms.Label CurrentImportAction;
         private System.Windows.Forms.Label importGroupMembersLabel;
         private System.Windows.Forms.Label importGroupLabel;
         private System.Windows.Forms.TextBox importGroupMembersPath;
@@ -557,7 +540,7 @@
         private System.Windows.Forms.TextBox destinationPath;
         private System.Windows.Forms.Label importReportPathLabel;
         private System.Windows.Forms.TextBox importReportPath;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button importReportPathBrowseButton;
     }
 }
 

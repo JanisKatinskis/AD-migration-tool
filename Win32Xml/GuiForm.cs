@@ -6,8 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using System.Threading;
 
 
 namespace Win32Xml
@@ -31,9 +33,9 @@ namespace Win32Xml
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (exportFolderBrowserDialog.ShowDialog() == DialogResult.OK)
+            if (FolderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                this.destinationPath.Text = exportFolderBrowserDialog.SelectedPath;
+                this.destinationPath.Text = FolderBrowserDialog.SelectedPath;
             }
         }
 
@@ -144,6 +146,14 @@ namespace Win32Xml
                 Global.generateReport = true;
                 Global.reportPath = importReportPath.Text;
 
+                // check if the report file path has entered and exists
+                if (importReportPath.Text == string.Empty || Directory.Exists(importReportPath.Text) == false)
+                {
+                    MessageBox.Show("Incorrect report path!", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
+                }
+
                 // Create the report file
                 AccountImport.generateImportReportFile(Global.reportPath);
             }
@@ -168,11 +178,13 @@ namespace Win32Xml
                     Global.importUserPath = importUserPath.Text;
                     ExportCurrentAction.Text = "Importing users...";
                     PasswordPrompt passwordPrompt = new PasswordPrompt();
-                    passwordPrompt.Show();
+                    passwordPrompt.ShowDialog();
+
+
                 }
 
             }
-
+            
             // Checks if "Export users" checkbox is checked. If true, executes function
             // that will query and export Active Directory user info.
             if (importGroups.Checked == true)
@@ -213,8 +225,7 @@ namespace Win32Xml
             }
             else
             {
-                MessageBox.Show("All done!", "Alldone!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CurrentImportAction.Text = "All tasks finished!";
             }
 
             //ExportCurrentAction.Text = "Everything done!";
@@ -323,6 +334,19 @@ namespace Win32Xml
         }
 
         private void importFileDialog_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            if (FolderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                this.importReportPath.Text = FolderBrowserDialog.SelectedPath;
+            }
+        }
+
+        private void label1_Click_2(object sender, EventArgs e)
         {
 
         }

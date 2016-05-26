@@ -436,15 +436,32 @@ namespace Win32Xml
         /// <param name="HomeDrive">HomeDrive parameter from the Active Directory info file</param>
         public static void CreateHomeFolder(string HomeDirectory, string HomeDrive)
         {
+
+            // variable for the homefolder
             string homeFolder = HomeDirectory;
-            for (int i = 0; i < 3; i++)
+
+            try
             {
-                homeFolder = homeFolder.Substring(homeFolder.IndexOf('\\') + 1);
+                for (int i = 0; i < 3; i++)
+                {
+                    homeFolder = homeFolder.Substring(homeFolder.IndexOf('\\') + 1);
+                }
+
+                homeFolder = HomeDrive + "\\" + homeFolder;
+
+                Directory.CreateDirectory(homeFolder);
             }
 
-            homeFolder = HomeDrive + "\\" + homeFolder;
-
-            Directory.CreateDirectory(homeFolder);
+            // Error handler
+            catch (Exception e)
+            {
+                // Checks if the "Generate Report" checkbox is ticked
+                if (Global.generateReport == true)
+                {
+                    // Adds report entry if there is an error creating user
+                    Utility.addToReportFile("Error creating homefolder \"" + homeFolder + "\": " + e.Message);
+                }
+            }
 
         }
 

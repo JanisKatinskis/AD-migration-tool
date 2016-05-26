@@ -42,6 +42,9 @@ namespace Win32Xml
         // Contains path to imported group members' info file
         private static string _importGroupUserPath = "";
 
+        // Contains path to imported group members' info file
+        private static bool _userPasswordSet = false;
+
 
         // Function to get or set the report file folder path
         public static string password
@@ -111,6 +114,13 @@ namespace Win32Xml
         {
             get { return _importGroupUserPath; }
             set { _importGroupUserPath = value; }
+        }
+
+        // Function to get or set the boolean for report generation
+        public static bool userPasswordSet
+        {
+            get { return _userPasswordSet; }
+            set { _userPasswordSet = value; }
         }
 
     }

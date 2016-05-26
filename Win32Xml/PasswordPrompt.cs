@@ -30,6 +30,9 @@ namespace Win32Xml
 
                 // Executes the function to read users, which begins the user creation process
                 AccountImport.ReadUsers(Global.importUserPath);
+
+                
+                Global.userPasswordSet = true;
             }
             else
             {
