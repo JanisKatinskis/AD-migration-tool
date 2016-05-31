@@ -77,7 +77,7 @@ namespace Win32Xml
             // Error handler
             catch (Exception e)
             {
-                MessageBox.Show("An error occurred. {0}", e.Message);
+                MessageBox.Show(e.Message, "Error");
             }
         }
 
@@ -442,14 +442,14 @@ namespace Win32Xml
 
             try
             {
-                for (int i = 0; i < 3; i++)
-                {
-                    homeFolder = homeFolder.Substring(homeFolder.IndexOf('\\') + 1);
-                }
 
-                homeFolder = HomeDrive + "\\" + homeFolder;
+                // creates the home directory for the user
+                Directory.CreateDirectory(HomeDirectory);
 
-                Directory.CreateDirectory(homeFolder);
+                // Adds report entry about the home directory
+                Utility.addToReportFile("Homefolder \"" + homeFolder + "\" created succesfully");
+
+
             }
 
             // Error handler
@@ -459,7 +459,7 @@ namespace Win32Xml
                 if (Global.generateReport == true)
                 {
                     // Adds report entry if there is an error creating user
-                    Utility.addToReportFile("Error creating homefolder \"" + homeFolder + "\": " + e.Message);
+                    Utility.addToReportFile("Error creating homefolder \"" + HomeDirectory + "\": " + e.Message);
                 }
             }
 

@@ -24,7 +24,6 @@ namespace Win32Xml
         /// <summary>
         /// Function that queries all users in Active Directory and saves their info to an XML file.
         /// </summary>
-        /// <param name="QueryPrincipalUsers"></param>
         public static void QueryPrincipalUsers(string folderPath, string fileName)
         {
             
