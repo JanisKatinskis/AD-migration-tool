@@ -71,6 +71,15 @@ namespace Win32Xml
         private void exportRunButton_Click(object sender, EventArgs e)
         {
 
+            // If there is an attempt to run the program with no checkboxes selected
+            if (userCheckBox.Checked == false && groupCheckBox.Checked == false && groupUserCheckBox.Checked == false)
+            {
+                MessageBox.Show("You have not selected any of the actions.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+
             // Sets wheter or not to generate report
             if (generateReportCheckBox.Checked == true)
             {
@@ -92,9 +101,18 @@ namespace Win32Xml
             // Adds an extra slash at the end of the folder path if there isn't one already. Avoids unnecessary problems.
             if (lastChar != '\\') destinationPath.Text = destinationPath.Text + "\\";
 
+            // If the mention report path does not exist or is not selected
+            if (Global.generateReport == true && (destinationPath.Text == string.Empty || Directory.Exists(destinationPath.Text) == false))
+            {
+                MessageBox.Show("Incorrect report path!", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+
             // Checks if "Export users" checkbox is checked. If true, executes function
             // that will query and export Active Directory user info.
-            if(userCheckBox.Checked == true)
+            if (userCheckBox.Checked == true)
             {
                 ExportCurrentAction.Text = "Exporting users...";
                 AccountExport.QueryPrincipalUsers(destinationPath.Text, userFileName.Text);
@@ -113,13 +131,7 @@ namespace Win32Xml
                 AccountExport.QueryGroupsMembers(destinationPath.Text, groupMemberFileName.Text);
             }
 
-            if (userCheckBox.Checked == false && groupCheckBox.Checked == false && groupUserCheckBox.Checked == false)
-            {
-                MessageBox.Show("You have not selected any of the actions.", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            ExportCurrentAction.Text = "Everything done!";
+            ExportCurrentAction.Text = "All tasks finished!";
 
         }
 
@@ -140,6 +152,14 @@ namespace Win32Xml
         private void importRunButton_Click(object sender, EventArgs e)
         {
 
+            if (importUsers.Checked == false && importGroups.Checked == false && importGroupUsers.Checked == false)
+            {
+                MessageBox.Show("You have not selected any actions!", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+
             // Sets wheter or not to generate report
             if (generateReportCheckBox.Checked == true)
             {
@@ -147,11 +167,12 @@ namespace Win32Xml
                 Global.reportPath = importReportPath.Text;
 
                 // check if the report file path has entered and exists
-                if (importReportPath.Text == string.Empty || Directory.Exists(importReportPath.Text) == false)
+                if (Global.generateReport == true && (importReportPath.Text == string.Empty || Directory.Exists(importReportPath.Text) == false))
                 {
                     MessageBox.Show("Incorrect report path!", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    
+
+                    return;
                 }
 
                 // Create the report file
@@ -172,11 +193,13 @@ namespace Win32Xml
                 {
                     MessageBox.Show("Incorrect user file selected!", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    return;
                 }
                 else
                 {
                     Global.importUserPath = importUserPath.Text;
-                    ExportCurrentAction.Text = "Importing users...";
+                    CurrentImportAction.Text = "Importing users...";
                     PasswordPrompt passwordPrompt = new PasswordPrompt();
                     passwordPrompt.ShowDialog();
 
@@ -194,10 +217,12 @@ namespace Win32Xml
                 {
                     MessageBox.Show("Incorrect group file selected!", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    return;
                 }
                 else
                 {
-                ExportCurrentAction.Text = "Importing groups...";
+                CurrentImportAction.Text = "Importing groups...";
                 AccountImport.ReadGroups(importGroupPath.Text);
 
                 }
@@ -210,39 +235,22 @@ namespace Win32Xml
                 {
                     MessageBox.Show("Incorrect group member file selected!", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    return;
                 }
                 else
                 {
-                ExportCurrentAction.Text = "Adding users to groups...";
+                CurrentImportAction.Text = "Adding users to groups...";
                 AccountImport.UsersToGroups(importGroupMembersPath.Text);
                 }
             }
 
-            if (importUsers.Checked == false && importGroups.Checked == false && importGroupUsers.Checked == false)
-            {
-                MessageBox.Show("You have not selected any actions!", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                CurrentImportAction.Text = "All tasks finished!";
-            }
+            CurrentImportAction.Text = "All tasks finished!";
 
-            //ExportCurrentAction.Text = "Everything done!";
         }
 
         private void sourceBrowseButton_Click(object sender, EventArgs e)
         {
-            //XDocument doc = XDocument.Load(importFileDialog.FileName);
-
-            /**
-            if(doc.FirstNode.ToString() != "account_list")
-            {
-                MessageBox.Show("This file does not contain apropriate XML tag!", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            }
-            **/
 
             if (importFileDialog.ShowDialog() == DialogResult.OK)
             {

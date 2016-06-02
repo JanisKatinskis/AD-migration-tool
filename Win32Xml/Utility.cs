@@ -17,9 +17,9 @@ namespace Win32Xml
         /// <param name="reportMessage">Message to be written in the file</param>
         public static void addToReportFile(string reportMessage)
         {
-            
+
             // adds new line to the file containing report message.
-            File.AppendAllText(Global.reportFullPath, reportMessage + Environment.NewLine); 
+            File.AppendAllText(Global.reportFullPath, reportMessage + Environment.NewLine);
 
         }
 

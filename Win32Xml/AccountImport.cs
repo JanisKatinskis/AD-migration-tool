@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
+using System.Security.AccessControl;
 using System.Xml;
 using System.Xml.Linq;
-using System.DirectoryServices;
+using System.DirectoryServices.ActiveDirectory;
 using System.DirectoryServices.AccountManagement;
 using System.Windows.Forms;
 
@@ -274,7 +275,7 @@ namespace Win32Xml
                 if (HomeDirectory != String.Empty)
                 {
                     // Creates home directory for the user.
-                    CreateHomeFolder(HomeDirectory, HomeDrive);
+                    CreateHomeFolder(HomeDirectory, user.SamAccountName);
                 }
 
                 // Expires the password so the user will have to change it on next logon.
@@ -339,7 +340,10 @@ namespace Win32Xml
                     group.Description = Description;
                 }
 
-                group.DisplayName = DisplayName;
+                if (DisplayName != string.Empty)
+                {
+                   group.DisplayName = DisplayName;
+                }
 
                 // Sets group's Scope wheter it is Local, Global, or Universal.
                 switch (varGroupScope)
@@ -433,12 +437,9 @@ namespace Win32Xml
         /// Creates home folder for the user.
         /// </summary>
         /// <param name="HomeDirectory">HomeDirectory parameter from the Active Directory info file</param>
-        /// <param name="HomeDrive">HomeDrive parameter from the Active Directory info file</param>
-        public static void CreateHomeFolder(string HomeDirectory, string HomeDrive)
+        /// <param name="UserName">Username for the folder rights allocation</param>
+        public static void CreateHomeFolder(string HomeDirectory, string UserName)
         {
-
-            // variable for the homefolder
-            string homeFolder = HomeDirectory;
 
             try
             {
@@ -447,8 +448,29 @@ namespace Win32Xml
                 Directory.CreateDirectory(HomeDirectory);
 
                 // Adds report entry about the home directory
-                Utility.addToReportFile("Homefolder \"" + homeFolder + "\" created succesfully");
+                Utility.addToReportFile("Homefolder \"" + HomeDirectory + "\" created succesfully");
 
+                DirectorySecurity dirSec = Directory.GetAccessControl(HomeDirectory);
+
+                string domain = Domain.GetCurrentDomain().ToString();
+
+                try
+                {
+                    dirSec.AddAccessRule(new FileSystemAccessRule(domain + "\\" + UserName, FileSystemRights.FullControl, AccessControlType.Allow));
+
+                    //dirSec.AddAccessRule(new FileSystemAccessRule(UserName, FileSystemRights.FullControl, AccessControlType.Allow));
+
+                }
+                catch (Exception ee)
+                {
+                    // Checks if the "Generate Report" checkbox is ticked
+                    if (Global.generateReport == true)
+                    {
+                        // Adds report entry if there is an error creating user
+                        Utility.addToReportFile("Error creating homefolder rights \"" + HomeDirectory + "\": " + ee.Message);
+                    }
+
+                }
 
             }
 

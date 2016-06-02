@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Win32Xml
@@ -27,6 +27,8 @@ namespace Win32Xml
 
                 // Closes the password form
                 this.Close();
+
+                Thread.Sleep(100);
 
                 // Executes the function to read users, which begins the user creation process
                 AccountImport.ReadUsers(Global.importUserPath);

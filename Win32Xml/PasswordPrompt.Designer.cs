@@ -38,7 +38,7 @@
             // 
             // passwordBox
             // 
-            this.passwordBox.Location = new System.Drawing.Point(113, 35);
+            this.passwordBox.Location = new System.Drawing.Point(113, 61);
             this.passwordBox.Name = "passwordBox";
             this.passwordBox.PasswordChar = '*';
             this.passwordBox.Size = new System.Drawing.Size(126, 20);
@@ -46,7 +46,7 @@
             // 
             // passwordBox2
             // 
-            this.passwordBox2.Location = new System.Drawing.Point(113, 61);
+            this.passwordBox2.Location = new System.Drawing.Point(113, 35);
             this.passwordBox2.Name = "passwordBox2";
             this.passwordBox2.PasswordChar = '*';
             this.passwordBox2.Size = new System.Drawing.Size(126, 20);
